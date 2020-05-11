@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+html, body {
+  height: 100%;
+  width: 100%;
+    overflow-y: hidden;
+  font-family: 'Poppins','Microsoft JhengHei';
+  color: #222;
+  box-sizing: border-box;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+nav {
+    height: 8vh; 
+}
+
+.navbar {
+    padding: .8rem;
+}
+  
+.navbar-nav li {
+    padding-right: 20px;
+}
+  
+.nav-link {
+    font-size: 1.1em;
+}
+
+.signup {
+    margin: 10vh 0;
+    height: 60vh;
+}
+
+.form-container {
+    height: 60vh;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px rgba(0,0,0,.3);
+    /* border: 1px solid #555; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    font-size: 2.9rem;
+    margin: .5em;
+    color:  #333;
+}
+
+.forget {
+    width: 300px;
+}
+
+.input {
+    margin: 5px;
+}
+
+input.invalid {
+    border: 2px solid red;
+}
+
+a {
+    display: block;
+    float: right;
+    font-size: .9rem;
+}
+
+.warning {
+    color: red;
+}
+
+#submit {
+    margin: 1rem;
+    width: 10em;
+}
+
+.signup-image {
+    margin-left: 2em;
+}
+
+footer {
+    position: fixed;
+    height: 8vh;
+    width: 100%;
+    background-color: #3f3f3f;
+    color: #d5d5d5;
+    bottom: 0;
+}
+
+  
+@media (max-width: 768px) {
+.signup-image img {
+    display: none;
+}
+}
+
+/*--- Bootstrap Padding Fix --*/
+[class*="col-"] {
+    padding: 1rem;
+}

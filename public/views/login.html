@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sport Record System</title>
+
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+
+    <link rel="stylesheet" href="css/login.css" id="pagestyle">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">    
+</head>
+<body>
+
+
+    <!-- Navigation Section -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
+        <a class="navbar-brand" href="/">SportReportSystem</a>   
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsResponsive" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+            <li class="nav-item"><a class="nav-link" href="/record">Record</a></li>
+            <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
+            <li class="nav-item"><a class="nav-link" href="/team">Team</a></li>
+            <li class="nav-item"><a class="nav-link" href="/signup">Sign Up</a></li>
+            <li class="nav-item active"><a class="nav-link" href="/login">Log In</a></li>
+          </ul>
+        </div>
+    </nav>
+
+    <!-- Connect -->
+
+    <div class="login" class="container-fluid padding">
+        <div class="row text-center padding">
+            <div class="login-image col-md-6 d-flex align-items-center">
+                <img src="img/undraw_access_account_99n5.svg" style="width: 40vw;" alt="">
+            </div>
+            <div class="col-md-5">
+                <form action="">
+                    <div class="form-container" style="background-color: #cfdfdb;">
+                        <h2>歡迎登入</h2>
+                        <div class="input">
+                            <i class="fas fa-user"></i>
+                            <label for="username">使用者:</label>
+                            <input id="username" type="text" required autocomplete="off">
+                        </div>
+                        <div class="input">
+                            <i class="fas fa-lock"></i>
+                            <label for="password">&nbsp;&nbsp;密碼&nbsp;&nbsp;:</label>
+                            <input id="password" type="password" required autocomplete="off">
+                            
+                        </div>
+                        <div class="forget">
+                            <a href="#">Forget Password?</a>
+                        </div>
+                        
+                        <button id="submit" class="btn btn-outline-dark btn-md">Login</button>
+                        <div class="to-signup">
+                            <a href="/signup">Sign Up?</a>
+                        </div>
+                        <p class="warning"></p>
+                    </div> 
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-12">
+                <h5>&copy; ntuimvolleyball.com</h5>
+            </div>
+        </div>
+    </div>
+    </footer>
+
+    <script type="text/javascript" src="js/login.js"></script>
+</body>
+</html>
