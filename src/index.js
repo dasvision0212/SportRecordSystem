@@ -1,13 +1,25 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const port = process.env.PORT || 3000;
 const path = require('path');
 const publicDirPath = path.join(__dirname, '../public');
 
+var corsOptions= {
+    origin: [
+        '*',
+        'http://35.240.254.213:8787',
+        'http://localhost:3000',
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}
 // Static Resource
 app.use(express.static(publicDirPath));
 // Accept JSON Format
 app.use(express.json());
+
+app.use(cors(corsOptions));
 
 // Route
 app.get('/', function(req, res){

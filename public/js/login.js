@@ -2,6 +2,7 @@ $username = $('#username')
 $password = $('#password')
 $warning  = $('.warning')
 
+$username[0].focus();
 
 $('.forget a').on('click', function(e) {
     e.preventDefault();
@@ -29,13 +30,13 @@ $('#submit').on('click', function(e) {
     }
     
     var body = {
-        name: $username[0].value,
+        account: $username[0].value,
         password: $password[0].value
     } 
 
-    post('/login/', body)
+    post('http://34.87.51.47:8787/api/login', body)
     .done(function(res) {
-        console.log(res)
+        console.log('Post Login: ',res)
         document.location.href = res.url;
     })
     .fail(function(error) {
@@ -47,11 +48,11 @@ $('#submit').on('click', function(e) {
 function post(url, body) {
     return $.ajax({
         url: url,
+        headers: {
+        },
         method: 'POST',
-        xhrFields: { withCredentials: true },
-        contentType: 'application/json',
         data: JSON.stringify(body),
-        timeout: 30000
+        timeout: 0
     })
 }
 
