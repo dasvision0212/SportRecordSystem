@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+html, body {
+  height: 100%;
+  width: 100%;
+    overflow-y: hidden;
+  font-family: 'Poppins','Microsoft JhengHei';
+  color: #222;
+  box-sizing: border-box;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+nav {
+    height: 8vh; 
+}
+
+.navbar {
+    padding: .8rem;
+}
+  
+.navbar-nav li {
+    padding-right: 20px;
+}
+  
+.nav-link {
+    font-size: 1.1em;
+}
+
+.history{
+    height: 95vh;
+    overflow: auto;
+    padding-bottom: 20px;
+}
+
+.history .nav-link{
+    color: #aaaaaa;
+    width: 100%;
+}
+
+.info{
+    margin: 30px;
+}
+
+.info ul{
+    border-radius: 0px;
+    justify-content: right;
+}
+
+.info li{
+    border-top: 0 none;
+    border-left: 0 none;
+    border-bottom: 0 none;
+    width: 120px;
+    margin-left: 5px;
+}
+
+.tab-pane{
+    padding-bottom: 20px;
+}
+
+.stat-cards .card{
+    padding-left: 0px;
+    padding-right: 0px;
+    border-top-left-radius: .75rem;
+    border-top-right-radius: .75rem;
+    border-bottom-left-radius: .75rem;
+    border-bottom-right-radius: .75rem;
+    margin: 20px;
+}
+
+.stat-cards .card-header{
+    height: 250px;
+    background-color: #faeae0;
+    border-top-left-radius: .75rem;
+    border-top-right-radius: .75rem;
+    border-top: 0 none;
+    border-bottom: 0 none;
+    border-left: 0 none;
+    border-right: 0 none;
+    line-height: 250px;
+    text-align: center;
+}
+
+.stat-cards .card-header span{
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+.stat-cards .card-header h1{
+    font-size: 84pt;
+    text-align: center;
+    color: #444444;
+}
+
+.match-record{
+    margin: 10px;
+    padding-left: 10px;
+    padding-top: -1px;
+    padding-bottom: -1px;
+}
+
+.match-record row{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.match-record .card-leading{
+    height: 75px;
+    width: 7.5px;
+    padding: 0px;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+    background-color: #bbbbbb;
+}
+
+.match-record.defeat .card-leading{
+    background-color: #d55539;
+}
+
+.match-record.victory .card-leading{
+    background-color: #7ebb3a;
+}
+
+.match-record .card-content{
+    padding: 0;
+}
+
+.match-record .list-group-item{
+    border-top: 0 none;
+    border-left: 0 none;
+    border-bottom: 0 none;
+    border-right: 0 none;
+    padding-left: 18px;
+    padding-right: 18px;
+    height: 70px;
+}
+
+.match-record .list-group-item.lineup{
+    border-right: 1px #dddddd solid;
+    height: 60px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.match-record .list-group-item.lineup p{
+    padding-top: 5px;
+    text-align: right;
+    font-size: 10pt;
+}
+
+.match-record .list-group-item p{
+    font-size: 8pt;
+    color: #999999;
+    margin-bottom: 5px;
+}
+
+.match-record .list-group-item h3{
+    font-size: 16pt;
+    color: #333333;
+    margin-bottom: 3px;
+}
+
+.match-record .list-group-item.score{
+    width: 105px;
+}
+
+.match-record .list-group-item.stats{
+    width: 90px;
+}
+
+.tab-content{
+    margin-top: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.main-table thead th {
+    position: sticky;
+    top: 0; 
+}
+
+table  { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 16px; }
+th[scope=col] { background:#eeeeee; }
+
+h2 {
+    font-size: 2.9rem;
+    margin: .5em;
+    color:  #333;
+}
+
+
+a {
+    display: block;
+    float: right;
+    font-size: .9rem;
+}
+
+
+
+/*--- Bootstrap Padding Fix --*/
+[class*="col-"] {
+    padding: 1rem;
+}
