@@ -110,57 +110,59 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="history-match">
                 <div class="matches">
-                    <div class="card match-record defeat">
-                        <div class="row">
-                            <div class="card-leading"></div>
-                            <div class="col card-content">
-                                <ul class="list-group list-group-horizontal">
-                                    <li class="list-group-item lineup">
-                                        <b> vs. &nbsp 台大生傳</b>
-                                        <p>2020/05/24</p>
-                                    </li>
-                                    <li class="list-group-item score">
-                                        <p>第一局</p>
-                                        <h3>18 : 25</h3>
-                                    </li>
-                                    <li class="list-group-item score">
-                                        <p>第一局</p>
-                                        <h3>18 : 25</h3>
-                                    </li>
-                                    <li class="list-group-item score">
-                                        <p>第一局</p>
-                                        <h3>18 : 25</h3>
-                                    </li>
-                                    <li class="list-group-item score">
-                                        <p>第一局</p>
-                                    </li>
-                                    <li class="list-group-item score">
-                                        <p>第一局</p>
-                                    </li>
-                                    <li class="list-group-item stats">
-                                        <p>攻擊得分</p>
-                                        <h3>12</h3>
-                                    </li>
-                                    <li class="list-group-item stats">
-                                        <p>攔網得分</p>
-                                        <h3>0</h3>
-                                    </li>
-                                    <li class="list-group-item stats">
-                                        <p>Ace</p>
-                                        <h3>20</h3>
-                                    </li>
-                                    <li class="list-group-item stats">
-                                        <p>失誤失分</p>
-                                        <h3>13</h3>
-                                    </li>
-                                    <li class="list-group-item stats">
-                                        <p>一傳失誤率</p>
-                                        <h3>.288</h3>
-                                    </li>
-                                </ul>
+                    <a href="#chart" class="btn match-record">
+                    <div class="card defeat">
+                            <div class="row">
+                                <div class="card-leading"></div>
+                                <div class="col card-content">
+                                    <ul class="list-group list-group-horizontal">
+                                        <li class="list-group-item lineup">
+                                            <b> vs. &nbsp 台大生傳</b>
+                                            <p>2020/05/24</p>
+                                        </li>
+                                        <li class="list-group-item score">
+                                            <p>第一局</p>
+                                            <h3>18 : 25</h3>
+                                        </li>
+                                        <li class="list-group-item score">
+                                            <p>第一局</p>
+                                            <h3>18 : 25</h3>
+                                        </li>
+                                        <li class="list-group-item score">
+                                            <p>第一局</p>
+                                            <h3>18 : 25</h3>
+                                        </li>
+                                        <li class="list-group-item score">
+                                            <p>第一局</p>
+                                        </li>
+                                        <li class="list-group-item score">
+                                            <p>第一局</p>
+                                        </li>
+                                        <li class="list-group-item stats">
+                                            <p>攻擊得分</p>
+                                            <h3>12</h3>
+                                        </li>
+                                        <li class="list-group-item stats">
+                                            <p>攔網得分</p>
+                                            <h3>0</h3>
+                                        </li>
+                                        <li class="list-group-item stats">
+                                            <p>Ace</p>
+                                            <h3>20</h3>
+                                        </li>
+                                        <li class="list-group-item stats">
+                                            <p>失誤失分</p>
+                                            <h3>13</h3>
+                                        </li>
+                                        <li class="list-group-item stats">
+                                            <p>一傳失誤率</p>
+                                            <h3>.288</h3>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="players-stats">
@@ -177,7 +179,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr onclick="window.location='#chart';">
                                 <th scope="row">黃心</th>
                                 <td>.990</td>
                                 <td>.880</td>
@@ -187,6 +189,27 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="stats-plots row" id="chart">
+            <div class="col-8 plot-info">
+                <h1 id="name">黃心<span id="pos">攔中</span></h1>
+                <ul class="list-group stats">
+                    <li class="list-group-item">發失率</li>
+                    <li class="list-group-item">接失率</li>
+                    <li class="list-group-item">攻失率</li>
+                    <li class="list-group-item">攻擊率</li>
+                    <li class="list-group-item">攔網率</li>
+                </ul>
+            </div>
+            <div class="col-3 plot">
+                <h1>發球落點圖</h1>
+                <div class="plot-body" style="position: relative;">
+                    <img id="volleyball_court" src="img/volleyball_court.png" style="position: absolute; top: 0; left: 0; width: 25vw;" alt="">
+                    <canvas class="plot-canvas" id="serve-plot" style="position: absolute; top: 0; left: 0;">
+                    </canvas>
                 </div>
             </div>
         </div>

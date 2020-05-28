@@ -7,6 +7,7 @@ html, body {
   font-family: 'Poppins','Microsoft JhengHei';
   color: #222;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 * {
@@ -33,7 +34,8 @@ nav {
 
 .history{
     height: 95vh;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding-bottom: 20px;
 }
 
@@ -100,12 +102,10 @@ nav {
 
 .match-record{
     margin: 10px;
-    padding-left: 10px;
-    padding-top: -1px;
-    padding-bottom: -1px;
+    padding: 0;
 }
 
-.match-record row{
+.match-record .row{
     margin-left: 0;
     margin-right: 0;
 }
@@ -121,11 +121,11 @@ nav {
     background-color: #bbbbbb;
 }
 
-.match-record.defeat .card-leading{
+.match-record .defeat .card-leading{
     background-color: #d55539;
 }
 
-.match-record.victory .card-leading{
+.match-record .victory .card-leading{
     background-color: #7ebb3a;
 }
 
@@ -178,6 +178,11 @@ nav {
     width: 90px;
 }
 
+.player-table tbody tr:hover{
+    cursor:pointer;
+    background-color: #f8f8f8;
+}
+
 .tab-content{
     margin-top: 10px;
     margin-left: 10%;
@@ -185,6 +190,45 @@ nav {
     height: 90%;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.stats-plots{
+    height: 90vh;
+}
+
+.stats-plots .plot-info{
+    padding-top: 3%;
+    padding-left: 5%;
+}
+
+.stats-plots .plot-info #name{
+    padding-left: 20px;
+    font-size: 54pt;
+}
+
+.stats-plots .plot-info #pos{
+    font-weight: 400;
+    margin-left: 20px;
+    font-size: 20pt;
+}
+
+.stats-plots .plot-info .list-group.stats{
+    width: 30vw;
+}
+
+.stats-plots .plot-info .list-group.stats li{
+    border-top: 0 none;
+    border-left: 0 none;
+    border-right: 0 none;
+    font-size: 16pt;
+    color: #999999;
+}
+
+.stats-plots .plot-body{
+    min-height: 100px;
+}
+
+.stats-plots .plot-body img{
 }
 
 
