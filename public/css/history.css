@@ -193,7 +193,7 @@ nav {
 }
 
 .stats-plots{
-    height: 90vh;
+    height: 95vh;
 }
 
 .stats-plots .plot-info{
@@ -235,6 +235,21 @@ nav {
 .main-table thead th {
     position: sticky;
     top: 0; 
+}
+
+.stats-plots .dropdown{
+    padding: 10px;
+    justify-content: center;
+}
+
+.stats-plots .dropdown .btn{
+    font-size: 22pt;
+    color: #000000;
+    background-color: #ffffff;
+    border-top: 0 none;
+    border-left: 0 none;
+    border-bottom: 0 none;
+    border-right: 0 none;
 }
 
 table  { border-collapse: collapse; width: 100%; }

@@ -205,10 +205,20 @@
                 </ul>
             </div>
             <div class="col-3 plot">
-                <h1>發球落點圖</h1>
+                <div class="row dropdown plot-list">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle displayed" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      發球落點圖
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <button class="dropdown-item" type="button" id="serve">發球落點圖</button>
+                        <button class="dropdown-item" type="button" id="attack">攻擊出手點圖</button>
+                        <button class="dropdown-item" type="button" id="receive">一傳落點圖</button>
+                        <button class="dropdown-item" type="button" id="set">二傳落點圖</button>
+                    </div>
+                </div>
                 <div class="plot-body" style="position: relative;">
                     <img id="volleyball_court" src="img/volleyball_court.png" style="position: absolute; top: 0; left: 0; width: 25vw;" alt="">
-                    <canvas class="plot-canvas" id="serve-plot" style="position: absolute; top: 0; left: 0;">
+                    <canvas class="plot-canvas" id="hotspot-plot" style="position: absolute; top: 0; left: 0;">
                     </canvas>
                 </div>
             </div>

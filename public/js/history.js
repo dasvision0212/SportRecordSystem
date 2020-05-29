@@ -1,47 +1,11 @@
-$( window ).resize(function() 
-{
-     var objHeight = 0;
-     var imgHeight = $('#volleyball_court').height()
-     var imgWidth = $('#volleyball_court').width()
-     $('.plot-body').height(imgHeight);
-     $('.plot-body').width(imgWidth);
-     $.each($('.plot-body').children('.plot-canvas'), function(){
-         $(this)[0].getContext("2d").canvas.height = imgHeight;
-     });
-     $.each($('.plot-body').children('.plot-canvas'), function(){
-         $(this)[0].getContext("2d").canvas.width = imgWidth;
-     });
+$( document ).ready(() => { resizeCanvas(); drawPlot('serve', {}); });
 
-    let canvas = document.getElementById("serve-plot");
-    console.log(canvas)
-    let ctx = canvas.getContext("2d");
-    drawDot(ctx, 100, 100)
-    drawDot(ctx, 150, 120)
-    drawDot(ctx, 130, 200)
-    drawDot(ctx, 140, 300)
-});
+$( window ).resize(resizeCanvas());
 
-$(document).ready(function() 
-{
-     var objHeight = 0;
-     var imgHeight = $('#volleyball_court').height()
-     var imgWidth = $('#volleyball_court').width()
-     $('.plot-body').height(imgHeight);
-     $('.plot-body').width(imgWidth);
-     $.each($('.plot-body').children('.plot-canvas'), function(){
-         $(this)[0].getContext("2d").canvas.height = imgHeight;
-     });
-     $.each($('.plot-body').children('.plot-canvas'), function(){
-         $(this)[0].getContext("2d").canvas.width = imgWidth;
-     });
-
-    let canvas = document.getElementById("serve-plot");
-    console.log(canvas)
-    let ctx = canvas.getContext("2d");
-    drawDot(ctx, 100, 100)
-    drawDot(ctx, 150, 120)
-    drawDot(ctx, 130, 200)
-    drawDot(ctx, 140, 300)
+$('.plot-list .dropdown-item').on('click', function(){
+    var type = $(this).attr('id');
+    $('.plot-list .displayed').html($(this).html());
+    drawPlot(type,{});
 })
 
 for (var r = 0; r < 25; r++) {
@@ -91,6 +55,39 @@ function handleError(error) {
         $warning.text(error.responseText);
     } else {
         return alert('連線發生問題，請檢察網路狀態。');
+    }
+}
+
+function resizeCanvas(){
+    var imgHeight = $('#volleyball_court').height()
+    var imgWidth = $('#volleyball_court').width()
+    $('.plot-body').height(imgHeight);
+    $('.plot-body').width(imgWidth);
+    $.each($('.plot-body').children('.plot-canvas'), function(){
+        $(this)[0].getContext("2d").canvas.height = imgHeight;
+    });
+    $.each($('.plot-body').children('.plot-canvas'), function(){
+        $(this)[0].getContext("2d").canvas.width = imgWidth;
+    });
+}
+
+function drawPlot(type, query){
+    let canvas = document.getElementById("hotspot-plot");
+    console.log(canvas)
+    let ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // get 'type' datas and draw it
+    if(type == 'serve'){
+        drawDot(ctx, 100, 100)
+        drawDot(ctx, 150, 120)
+        drawDot(ctx, 130, 200)
+        drawDot(ctx, 140, 300)
+    }
+    else{
+        drawDot(ctx, 500, 700)
+        drawDot(ctx, 750, 920)
+        drawDot(ctx, 330, 500)
+        drawDot(ctx, 740, 1300)
     }
 }
 
