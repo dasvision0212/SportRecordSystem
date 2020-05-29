@@ -9,6 +9,7 @@ var corsOptions= {
     origin: [
         '*',
         'http://35.240.254.213:8787',
+        'http://34.87.51.47:8787',
         'http://localhost:3000',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
