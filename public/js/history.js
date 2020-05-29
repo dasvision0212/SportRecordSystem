@@ -1,3 +1,26 @@
+$( window ).resize(function() 
+{
+     var objHeight = 0;
+     var imgHeight = $('#volleyball_court').height()
+     var imgWidth = $('#volleyball_court').width()
+     $('.plot-body').height(imgHeight);
+     $('.plot-body').width(imgWidth);
+     $.each($('.plot-body').children('.plot-canvas'), function(){
+         $(this)[0].getContext("2d").canvas.height = imgHeight;
+     });
+     $.each($('.plot-body').children('.plot-canvas'), function(){
+         $(this)[0].getContext("2d").canvas.width = imgWidth;
+     });
+
+    let canvas = document.getElementById("serve-plot");
+    console.log(canvas)
+    let ctx = canvas.getContext("2d");
+    drawDot(ctx, 100, 100)
+    drawDot(ctx, 150, 120)
+    drawDot(ctx, 130, 200)
+    drawDot(ctx, 140, 300)
+});
+
 $(document).ready(function() 
 {
      var objHeight = 0;
@@ -71,15 +94,14 @@ function handleError(error) {
     }
 }
 
-function drawDot(ctx, x, y, size=3) {
-    ctx.beginPath()
-    //沿用寬度及色彩設定
+function drawDot(ctx, x, y, size=5) {
+    var h = ctx.canvas.height;
+    var w = ctx.canvas.width;
+    ctx.beginPath();
     ctx.lineWidth = 3;
-    ctx.strokeStyle = "#000000"
-    ctx.fillStyle = "#000000"
-    /*使用arc(x,y,r,s,e)畫一個圓
-    x,y是圓心的座標，r是半徑，s和e是起點和終點的角度*/
-    ctx.arc(x,y,size,0,Math.PI*2)
-    ctx.fill()
-    ctx.stroke()
+    ctx.strokeStyle = "#000000";
+    ctx.fillStyle = "#000000";
+    ctx.arc(x/900*w, y/1800*h,size/1000*w,0,Math.PI*2);
+    ctx.fill();
+    ctx.stroke();
 }
