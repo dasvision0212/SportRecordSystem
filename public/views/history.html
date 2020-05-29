@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sport Record System</title>
+
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+
+    <link rel="stylesheet" href="css/history.css" id="pagestyle">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <!-- Navigation Section -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
+        <a class="navbar-brand" href="/">SportReportSystem</a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsResponsive"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                <li class="nav-item"><a class="nav-link" href="/record">Record</a></li>
+                <li class="nav-item active"><a class="nav-link" href="/history">History</a></li>
+                <li class="nav-item"><a class="nav-link" href="/team">Team</a></li>
+                <li class="nav-item"><a class="nav-link" href="/signup">Sign Up</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Connect -->
+    <div class="history">
+        <div class="info row">
+            <h1 class="col">台大資管男子排球隊</h1>
+            <ul class="col list-group list-group-horizontal">
+                <li class="list-group-item rounded-0">
+                    <p>勝場</p>
+                    <h3>15</h3>
+                </li>
+                <li class="list-group-item rounded-0">
+                    <p>敗場</p>
+                    <h3>5</h3>
+                </li>
+                <li class="list-group-item rounded-0">
+                    <p>勝率</p>
+                    <h3>0.750</h3>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav nav-tabs nav-justified">
+            <li class="nav-item">
+                <a class="nav-link active" role="tab" data-toggle="tab" href="#overview">總覽</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" role="tab" data-toggle="tab" href="#history-match">對戰紀錄</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" role="tab" data-toggle="tab" href="#players-stats">選手數據</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="overview">
+                <div class="stat-cards">
+                    <div class="row">
+                        <div class="col card">
+                            <div class="card-header"><span><h1>95%</h1></span></div>
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                        <div class="col card">
+                            <div class="card-header"><span><h1>95%</h1></span></div>
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                        <div class="col card">
+                            <div class="card-header"><span><h1>95%</h1></span></div>
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="history-match">
+                <div class="matches">
+                    <a href="#chart" class="btn match-record">
+                    <div class="card defeat">
+                            <div class="row">
+                                <div class="card-leading"></div>
+                                <div class="col card-content">
+                                    <ul class="list-group list-group-horizontal">
+                                        <li class="list-group-item lineup">
+                                            <b> vs. &nbsp 台大生傳</b>
+                                            <p>2020/05/24</p>
+                                        </li>
+                                        <li class="list-group-item score">
+                                            <p>第一局</p>
+                                            <h3>18 : 25</h3>
+                                        </li>
+                                        <li class="list-group-item score">
+                                            <p>第一局</p>
+                                            <h3>18 : 25</h3>
+                                        </li>
+                                        <li class="list-group-item score">
+                                            <p>第一局</p>
+                                            <h3>18 : 25</h3>
+                                        </li>
+                                        <li class="list-group-item score">
+                                            <p>第一局</p>
+                                        </li>
+                                        <li class="list-group-item score">
+                                            <p>第一局</p>
+                                        </li>
+                                        <li class="list-group-item stats">
+                                            <p>攻擊得分</p>
+                                            <h3>12</h3>
+                                        </li>
+                                        <li class="list-group-item stats">
+                                            <p>攔網得分</p>
+                                            <h3>0</h3>
+                                        </li>
+                                        <li class="list-group-item stats">
+                                            <p>Ace</p>
+                                            <h3>20</h3>
+                                        </li>
+                                        <li class="list-group-item stats">
+                                            <p>失誤失分</p>
+                                            <h3>13</h3>
+                                        </li>
+                                        <li class="list-group-item stats">
+                                            <p>一傳失誤率</p>
+                                            <h3>.288</h3>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="players-stats">
+                <div class="main-table container-fluid padding">
+                    <table class="table player-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">選手</th>
+                                <th scope="col">發失率</th>
+                                <th scope="col">接失率</th>
+                                <th scope="col">攻失率</th>
+                                <th scope="col">攻擊率</th>
+                                <th scope="col">攔網率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr onclick="window.location='#chart';">
+                                <th scope="row">黃心</th>
+                                <td>.990</td>
+                                <td>.880</td>
+                                <td>.793</td>
+                                <td>.320</td>
+                                <td>.550</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="stats-plots row" id="chart">
+            <div class="col-8 plot-info">
+                <h1 id="name">黃心<span id="pos">攔中</span></h1>
+                <ul class="list-group stats">
+                    <li class="list-group-item">發失率</li>
+                    <li class="list-group-item">接失率</li>
+                    <li class="list-group-item">攻失率</li>
+                    <li class="list-group-item">攻擊率</li>
+                    <li class="list-group-item">攔網率</li>
+                </ul>
+            </div>
+            <div class="col-3 plot">
+                <h1>發球落點圖</h1>
+                <div class="plot-body" style="position: relative;">
+                    <img id="volleyball_court" src="img/volleyball_court.png" style="position: absolute; top: 0; left: 0; width: 25vw;" alt="">
+                    <canvas class="plot-canvas" id="serve-plot" style="position: absolute; top: 0; left: 0;">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="js/history.js"></script>
+</body>
+
+</html>

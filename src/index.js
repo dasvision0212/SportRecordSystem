@@ -28,10 +28,10 @@ app.get('/', function(req, res){
 });
 
 app.get('/history', (req, res) => {
-    res.send('history page!')  
+    res.sendFile(path.join(publicDirPath, 'views/history.html'));
 })
 app.get('/record', (req, res) => {
-    res.send('record page!')  
+    res.send('record page!')
 })
 app.get('/team', (req, res) => {
     res.sendFile(path.join(publicDirPath, 'views/team.html'));
