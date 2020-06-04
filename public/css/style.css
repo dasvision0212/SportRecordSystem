@@ -1,0 +1,308 @@
+span{
+	 border: 1px solid #3B6273;
+	 border-radius: 50%;
+	 font-size: 30px;
+	 text-align: center;
+	 width: 50px;
+	 height: 50px;
+	 position: absolute;
+}
+.PAGE{
+	display: flex;
+}
+.lef{
+	width: 25vw;
+	height: 97vh;
+    border: 0.1px solid #3B6273;
+    display: flex;
+    flex-direction:column ;
+}
+
+.mid{
+	width: 70vw;
+	height: 60vh;
+    border: 0.1px solid #3B6273;
+    display: flex;
+    flex-direction:column ;
+	
+}
+.rig{
+　	width: 70vw;
+	height: 37vh;
+    display: flex;
+    border: 0.1px solid #3B6273;
+}
+.top-down{
+	display: flex;
+	flex-direction: column;
+}
+.down-left{
+	display: flex;
+	flex-direction: column;
+	width: 50vw;
+	border: 0.1px solid #3B6273;
+	
+}
+.down-right{
+	display: flex;
+	flex-direction: column;
+	width: 20vw;
+	border: 0.1px solid #3B6273;
+	
+}
+/* 6 part of the main function*/
+.ScoreBoard{
+	 border: 0.1px solid #3B6273;
+	 height: 20vh;
+}
+.PlayerList{
+	 border: 0.1px solid #3B6273;
+	 height: 97vh;
+}
+.Record{
+	
+	margin-top: 1vh;
+	padding-top: 1vh;
+	font-size: 15px;
+	text-align: center;
+}
+
+.Behavior{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.Quality{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.Sub{	
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	margin-top: 5vh;
+	margin-bottom: 5vh;
+}
+/*little function*/
+/*ScoreBoard*/
+.SchoolandGap{
+	text-align: center;
+	font-size: 25px;
+}
+.score{
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	font-size: 2.5vh;
+}
+.g-button{
+	display: flex;
+	align-content: center;
+	justify-content: center;
+}
+.s-button{
+	display: flex;
+	align-content: center;
+	justify-content: center;
+}
+.column{
+	display: flex;
+	flex-direction: column;
+}
+.g-plus-button{
+	font-size: 3vh;
+	border: 0.1px solid #3B6273;
+	width:3vw;
+	height: 4vh;
+	text-align: center;
+}
+.g-minus-button{
+	font-size: 3vh;
+	border: 0.1px solid #3B6273;
+	width:3vw;
+	height: 4vh;
+	text-align: center;
+}
+.s-plus-button{
+	font-size: 3vh;
+	border: 0.1px solid #3B6273;
+	width:3vw;
+	height: 4vh;
+	text-align: center;
+}
+.s-minus-button{
+	font-size: 3vh;
+	border: 0.1px solid #3B6273;
+	width:3vw;
+	height: 4vh;
+	text-align: center;
+}
+.college{
+	display: flex;
+	align-content: center;
+	justify-content: center;
+}
+.gap{
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	font-size: 35px;
+}
+
+#a-gap{
+	font-size: 6vh;
+	width: 5vw;
+	text-align: center;
+}
+#e-gap{
+	font-size: 6vh;
+	width: 5vw;
+	text-align: center;
+}
+#a-score{
+	font-size: 5vh;
+	width: 5vw;
+	text-align: center;
+}
+#colon{
+	font-size: 5vh;
+	width: 5vw;
+	text-align: center;
+}
+#e-score{
+	font-size: 5vh;
+	width: 5vw;
+	text-align: center;
+}
+#ClearButton{
+}
+/*field*/
+#field{
+	height:81.5vh;
+	background-color: yellow;
+}
+
+
+/*player*/
+.NameDragable{
+	padding-left: 5vw;
+	padding-right: 5vw;
+	margin-bottom: 1vh;
+	text-align: center;
+	border: 2.5px solid #3B6273;
+	font-size: 20px;
+	height: 8vh;
+}
+#border{
+	text-align: center;
+	font-size: 25px;
+	border: 1px solid #3B6273;
+}
+#player{
+	position:relative;
+}
+#player table {
+   width:100%;
+   
+}
+#table-scroll {
+  height:92.5vh;
+  overflow:auto;  
+}
+
+/*modal*/
+.modal-dialog{
+	display: flex;
+	width: 50vw;
+	align-items: center;
+}
+.modal-content{
+	width: 50vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.modal-header{
+	width: 20vw;
+	text-align: center;
+}
+.modal-body .Name{
+	font-size: 20px;
+	padding-left: 5vw;
+	padding-right: 5vw;
+	margin-bottom: 1vh;
+	text-align: center;
+	border: 2.5px solid #3B6273;
+}
+/*behavior*/
+.beh{
+	width: 7vw;
+}
+#buttonlist{
+	display: flex;
+	align-items:center;
+	justify-content: center;
+	margin-top: 5vh;
+	margin-bottom: 5vh;
+}
+#inLine{
+	display: flex;
+	height: 10vh;
+}
+#attack{
+	#width: 15vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #3B6273;
+	font-size: 30px;
+}
+#catch{
+	#width: 15vw;
+	border: 1px solid #3B6273;
+	font-size: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+}
+#launch{
+	#width: 30.2vw;
+	height: 10vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 30px;
+	border: 1px solid #3B6273;
+	
+
+}
+#block{
+	#width: 15vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #3B6273;
+	font-size: 30px;
+}
+#raise{
+	#width: 15vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #3B6273;
+	font-size: 30px;
+}
+/*Quality*/
+.qua{
+	border: 1px solid #3B6273;
+	font-size: 30px;
+	width: 5vw;
+	text-align: center;
+}
+/*sub*/
+#SubButton{	
+	font-size: 30px;
+}
+

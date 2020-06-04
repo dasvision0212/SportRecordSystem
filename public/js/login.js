@@ -51,7 +51,7 @@ function post(url, body) {
         headers: {
         },
         method: 'POST',
-        data: JSON.stringify(body),
+        data: body,
         timeout: 0
     })
 }

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>RecordPage</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="../css/style.css" rel="stylesheet">
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/record.js"></script>
+  <script type="text/javascript" src="/js/dragdroptouch.js"></script>
+</head>
+<body>
+<div class="PAGE">
+<div class="lef">
+	
+	<div class="PlayerList">
+		<div id="border" data-toggle="modal" data-target="#myModal" onclick="check(event);">選手</div>
+	
+	  <!-- Modal -->
+  			<div class="modal fade" id="myModal" role="dialog">
+    			<div class="modal-dialog modal-sm">
+      				<div class="modal-content">
+        				<div class="modal-header">
+          					<button type="button" class="close" data-dismiss="modal">&times;</button>
+          					<h4 class="modal-title">球員名冊</h4>
+        				</div>
+        				<div class="modal-body">
+          					<table>
+  								<tr>
+									<td class="Name" onclick='onField(event);' id="11">
+										11號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="12">
+										12號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="13">
+										13號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="14">
+										14號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="15">
+										15號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="16">
+										16號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="17">
+										17號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="18">
+										18號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="19">
+										19號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="20">
+										20號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="21">
+										21號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="22">
+										22號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="23">
+										23號劉正宇
+									</td>
+								</tr>
+								<tr>
+									<td class="Name" onclick='onField(event);' id="24">
+										24號劉正宇
+									</td>
+								</tr>
+							</table>
+        				</div>
+        				<div class="modal-footer">
+          					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        				</div>
+      				</div>
+    			</div>
+  			</div>
+
+		<div id="player" >
+  			<div id="table-scroll">
+  				<table id="PlayerOnTheField">
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="top-down">
+	<div class="mid">
+		<div class ="ScoreBoard">
+  			<div class="SchoolandGap">
+  				<div class='g-button'>
+  					<div class="column">
+  						<div class='g-plus-button' id='p-ally' onclick="changeGap(event)">+</div>
+  						<div class='g-minus-button' id='m-ally' onclick="changeGap(event)">-</div>
+  					</div>
+  					<div id='a-gap'>0</div>
+  					<div class="column">
+  						<div class='college'> TW college / TP college</div>
+  					</div>
+  					<div id='e-gap'>0</div>
+  					<div class="column">
+  						<div class='g-plus-button' id='p-enemy' onclick="changeGap(event)">+</div>
+  						<div class='g-minus-button' id='m-enemy' onclick="changeGap(event)">-</div>
+  					</div>
+				</div>
+  			</div>
+  			<div class="score">
+				<div class='s-button'>
+  					<div class="column">
+  						<div class='s-plus-button' id='p-ally' onclick="changeScore(event)">+</div>
+  						<div class='s-minus-button' id='m-ally' onclick="changeScore(event)">-</div>
+  					</div>
+  					<div id='a-score'>0</div>
+  					<div id="colon">:</div>
+  					<div id='e-score'>0</div>
+  					<div class="column">
+  						<div class='s-plus-button' id='p-enemy' onclick="changeScore(event)">+</div>
+  						<div class='s-minus-button' id='m-enemy' onclick="changeScore(event)">-</div>
+  					</div>
+  					<button id="ClearButton" onclick='clears()' >Clear</button>
+				</div>
+  			</div>
+		</div>
+		<div ondragover='onDragOver(event);' ondrop='onDrop(event);' id="field"></div>
+	</div>
+	<div class="rig">
+		<div class="down-left">
+			<div class="Behavior">
+				<div id="buttonlist">
+					<div id="inLine">
+						<div class="beh" id="attack" onclick='selectBehavior(event)' value='ATK'>攻擊</div>
+						<div class="beh"id="catch" onclick='selectBehavior(event)' value='DIG'>接球</div>
+					</div>
+					<div class="beh" id="launch" onclick='selectBehavior(event)' value='SERVE'>發球</div>
+					<div id="inLine">
+						<div class="beh" id="block" onclick='selectBehavior(event)' value='BLOCK'>攔網</div>
+						<div class="beh" id="raise" onclick='selectBehavior(event)' value='SET'>舉球</div>
+					</div>
+			
+				</div>
+			</div>
+			<div class="Quality">
+      			<div class="qua" id="a" onclick='selectQuality(event)' value='A'>A</div>
+      			<div class="qua" id="b" onclick='selectQuality(event)' value='B'>B</div>
+      			<div class="qua" id="c" onclick='selectQuality(event)' value='C'>C</div>
+      			<div class="qua" id="d" onclick='selectQuality(event)' value='D'>D</div>
+			</div>
+		</div>
+		<div class="down-right">
+			<div class="Sub">
+  				<button id="SubButton" onclick='submit(event)' >Submit</button>
+			</div>
+			<div class="History">
+				<div id="board">
+					<div class="Record">
+						12:31 - 11劉正宇 攻擊 得分
+					</div>
+					<div class="Record">
+						12:31 - 11劉正宇 攻擊 失敗
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</body>
+</html>
