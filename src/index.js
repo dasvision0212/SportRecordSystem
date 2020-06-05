@@ -4,6 +4,8 @@ const cors = require('cors');
 const port = process.env.PORT || 3000;
 const path = require('path');
 const publicDirPath = path.join(__dirname, '../public');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
 
 var corsOptions= {
     origin: [
@@ -15,7 +17,9 @@ var corsOptions= {
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
 }
-
+if(process.env.LOCALTEST) {
+    app.use('/api', createProxyMiddleware({ target: 'http://ntuim.cjiso.ninja/api', changeOrigin: true }));
+}
 // Static Resource
 app.use(express.static(publicDirPath));
 // Accept JSON Format
