@@ -1,21 +1,21 @@
-$email = $('#email')
+// $email = $('#email')
 $username = $('#username')
 $password = $('#password')
 $password2 = $('#password2')
 $warning  = $('.warning')
 
-var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+// var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
-$email.on('input', function(e) {
-    if (!emailReg.test($email[0].value)) {
-        $email.addClass('invalid');
-        return;
-    }
-    if (emailReg.test($email[0].value)) {
-        $email.removeClass('invalid');
-        return;
-    }
-})
+// $email.on('input', function(e) {
+//     if (!emailReg.test($email[0].value)) {
+//         $email.addClass('invalid');
+//         return;
+//     }
+//     if (emailReg.test($email[0].value)) {
+//         $email.removeClass('invalid');
+//         return;
+//     }
+// })
 
 $password2.on('input', function(e) {
     if($password[0].value != $password2[0].value) {
@@ -34,19 +34,19 @@ $('#submit').on('click', function(e) {
     
     reset();
 
-    if ($email[0].value == "") {
-        $email.focus();
-        $email.addClass('invalid');
-        $warning.text('請輸入信箱!');
-        return;
-    }
+    // if ($email[0].value == "") {
+    //     $email.focus();
+    //     $email.addClass('invalid');
+    //     $warning.text('請輸入信箱!');
+    //     return;
+    // }
 
-    if (!emailReg.test($email[0].value)) {
-        $email.focus();
-        $email.addClass('invalid');
-        $warning.text('信箱格式錯誤!');
-        return;
-    }
+    // if (!emailReg.test($email[0].value)) {
+    //     $email.focus();
+    //     $email.addClass('invalid');
+    //     $warning.text('信箱格式錯誤!');
+    //     return;
+    // }
 
     if ($username[0].value == "") {
         $username.focus();
@@ -78,15 +78,14 @@ $('#submit').on('click', function(e) {
     }
     
     var body = {
-        email: $email[0].value,
-        name: $username[0].value,
+        account: $username[0].value,
         password: $password[0].value,
     } 
 
-    post('/signup/', body)
+    post('api/register', body)
     .done(function(res) {
         console.log(res)
-        document.location.href = res.url;
+        document.location.href = '/login';
     })
     .fail(function(error) {
         console.log(error)
@@ -106,7 +105,7 @@ function post(url, body) {
 }
 
 function reset() {
-    $email.removeClass('invalid');
+    // $email.removeClass('invalid');
     $username.removeClass('invalid');
     $password.removeClass('invalid');
     $password2.removeClass('invalid');

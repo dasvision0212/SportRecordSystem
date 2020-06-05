@@ -34,10 +34,10 @@ $('#submit').on('click', function(e) {
         password: $password[0].value
     } 
 
-    post('http://34.87.51.47:8787/api/login', body)
+    post('/api/login', body)
     .done(function(res) {
         console.log('Post Login: ',res)
-        document.location.href = res.url;
+        document.location.href = '/';
     })
     .fail(function(error) {
         console.log(error)
