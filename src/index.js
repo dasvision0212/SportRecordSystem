@@ -17,9 +17,12 @@ var corsOptions= {
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
 }
+
+process.env.LOCALTEST = true
 if(process.env.LOCALTEST) {
-    app.use('/api', createProxyMiddleware({ target: 'http://ntuim.cjiso.ninja/api', changeOrigin: true }));
+    app.use('/api', createProxyMiddleware({ target: 'https://ntuim.cjiso.ninja/', changeOrigin: true }));
 }
+
 // Static Resource
 app.use(express.static(publicDirPath));
 // Accept JSON Format
