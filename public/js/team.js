@@ -14,3 +14,16 @@ $.ajax({
   .fail(function(error) {
     console.log(error)     
 })
+
+$.ajax({
+    "url": "/api/user/self",
+    "method": "GET",
+  })
+  .done(function (res) {
+    var account = res.account;
+    $('.author-card-name').text(account);
+    console.log(response);
+  })
+  .fail(function(error) {
+    console.log(error)     
+})

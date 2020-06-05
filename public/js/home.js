@@ -15,8 +15,7 @@ $('#logout').on('click', function() {
 })
 
 $('#disclaimer-knew').on('click', function(e) {
-    var $target = $(e.target);
-    $target.text('感謝您的諒解')
+    $(e.target).text('感謝您的諒解');
 })
 
 function getCookie(name) {
