@@ -14,9 +14,46 @@ var p_allyGap=0;
 var p_enemyGap=0;
 var dragArea;
 var subButton=document.getElementById('SubButton');
+var g_playerList_NAME;
+var g_playerList_NUMBER;
+var g_gid;
+var count = 0;
+//時間計算等動態表現
+var pause_bt=false;
+//onload, load the playerList in the modal
+window.onload = function() {
+
+    var modal=document.getElementById('mod');
+    get('api/team/self')
+    .done(function(res) {
+      g_playerList_NAME=new Array(res.players.length);
+      g_playerList_NUMBER=new Array(res.players.length);
+      g_gid=res.games[res.games.length-1]._id;
+      for(i = 0; i < res.players.length; i++){
+        g_playerList_NAME[i]=res.players[i].name;
+        g_playerList_NUMBER[i]=res.players[i].number;
+        var y = document.createElement("TR");
+        modal.appendChild(y);
+        var z = document.createElement("TD");
+        z.setAttribute("id", g_playerList_NUMBER[i]);
+        z.setAttribute('class','Name');
+        z.setAttribute('onclick','onField(event);');
+        var text = document.createTextNode(g_playerList_NUMBER[i]+'號 '+ g_playerList_NAME[i]);
+        z.appendChild(text);  
+        modal.appendChild(z);
+      }
+    })
+    .fail(function(error) {
+        console.log(error)      
+    })
+    
+};
+
+
+
+
 
 function onDragStart(event) {
-
   event.dataTransfer.setData('text', event.target.id);
 }
 function onDragOver(event) {
@@ -254,49 +291,67 @@ function submit(event){
   console.log(p_quality);
   console.log(p_locationX);
   console.log(p_locationY);
+  if(p_quality=='A'){
+    p_quality=100;
+  }
+  if(p_quality=='B'){
+    p_quality=80;
+  }
+  if(p_quality=='C'){
+    p_quality=60;
+  }
+  if (p_quality=='D') {
+    p_quality=0;
+  }
   var d=new Date();
+  var body = {
+        date: d.getTime(),
+        time:87,
+        quater:1,
+        event: p_behavior,
+        sub_type: null,
+        maker: "5ebeb11e5a6c20ed3e900f68",
+        relateds: ["5ed1244c2cb776dd1e8f32af"],
+        comment: 'a good shot',
+        time: 87,
+        value: p_quality,
+        x_loc: p_locationX,
+        y_loc: p_locationY,
+       
+  }
+      post('/api/game/'+g_gid+'/record',body)
+    .done(function(res) {
+        console.log('record: ',res)
+    })
+    .fail(function(error) {
+        console.log(error)      
+    })
   p_quality=' ';
   p_behavior=' ';
   p_locationX=' ';
   p_locationY=' ';
   p_playerID=' ';
-   /* var body = {
-        date: d.getTime(),
-        event: p_behavior,
-        sub_type: null,
-        maker: "5ebeb11e5a6c20ed3e900f68",
-        relateds: ["5ed1244c2cb776dd1e8f32af"],
-        time: 87,
-        x_loc: p_locationX,
-        y_loc: p_locationY,
-        comment: 'a good shot',
-        value: p_quality
-    }*/
-    /*var body={
-      account: "eethan1",
-      password: "jizzzzzz",
-      session: "{{session}"
-    }
-    console.log(body);
-    post('http://34.87.51.47:8787/api/register', body)
-    .done(function(res) {
-        console.log('Post Login: ',res)
-    })
-    .fail(function(error) {
-        console.log(error)      
-    })*/
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    var settings = {
-        "url": "http://34.87.51.47:8787/api/login",
-        "method": "POST",
-        "timeout": 0,
-        "data": {
-        "account": "eethan1",
-        "password": "jizzzzzz"
-        }
-  
+}
 
-    };
+function post(url, body) {
+    return $.ajax({
+        url: url,
+        headers: {
+        },
+        method: 'POST',
+        data: body,
+        timeout: 0
+    })
+}
+
+function get(url, body) {
+    return $.ajax({
+        url: url,
+        headers: {
+        },
+        method: 'GET',
+        timeout: 0
+    })
 }
 function changeScore(event){
   //plus
