@@ -8,6 +8,8 @@ else {
     $('#logout').hide();
 }
 
+$(".animated").addClass("delay-1s");
+
 // logout -> expires session
 $('#logout').on('click', function() {
     document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

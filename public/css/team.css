@@ -8,7 +8,9 @@ html, body {
   color: #222;
   box-sizing: border-box;
 }
-
+.show-obj {
+  word-wrap: break-word;
+}
 * {
     padding: 0;
     margin: 0;
@@ -32,6 +34,36 @@ nav {
 }
 
 
+.container {
+    overflow-x: hidden;
+    height: 84vh;
+    position: relative;
+    /* border: 2px solid black; */
+}
+
+.profile {
+  height: inherit;
+  margin-top: 10vh;
+}
+
+#team-list li {
+  background-color: #eee;
+}
+
+/* form {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(1000px);
+    transition: all 1s;
+    position: absolute;
+}
+
+form.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0px);
+} */
+
 body{
     background:#eee;    
 }
@@ -40,7 +72,6 @@ body{
 }
 .author-card {
   position: relative;
-  padding-bottom: 48px;
   background-color: #fff;
   box-shadow: 0 12px 20px 1px rgba(64, 64, 64, .09);
 }
