@@ -7,7 +7,7 @@
 
   <title>RecordPage</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <link href="../css/style.css" rel="stylesheet">
+  <link href="../css/record.css" rel="stylesheet">
 
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -30,77 +30,7 @@
           					<h4 class="modal-title">球員名冊</h4>
         				</div>
         				<div class="modal-body">
-          					<table>
-  								<tr>
-									<td class="Name" onclick='onField(event);' id="11">
-										11號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="12">
-										12號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="13">
-										13號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="14">
-										14號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="15">
-										15號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="16">
-										16號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="17">
-										17號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="18">
-										18號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="19">
-										19號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="20">
-										20號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="21">
-										21號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="22">
-										22號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="23">
-										23號劉正宇
-									</td>
-								</tr>
-								<tr>
-									<td class="Name" onclick='onField(event);' id="24">
-										24號劉正宇
-									</td>
-								</tr>
+          					<table id='mod'>
 							</table>
         				</div>
         				<div class="modal-footer">
@@ -153,6 +83,9 @@
   					</div>
   					<button id="ClearButton" onclick='clears()' >Clear</button>
 				</div>
+  			</div>
+  			<div class='counting'>
+  				<div id='timer'>HI</div>
   			</div>
 		</div>
 		<div ondragover='onDragOver(event);' ondrop='onDrop(event);' id="field"></div>
