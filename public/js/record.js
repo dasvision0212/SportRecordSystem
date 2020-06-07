@@ -13,12 +13,15 @@ var p_allyScore=0;
 var p_enemyScore=0;
 var p_allyGap=0;
 var p_enemyGap=0;
+var p_videotime=0;
 var dragArea;
 var subButton=document.getElementById('SubButton');
 var g_playerList_NAME;
 var g_playerList_NUMBER;
 var g_gid;
 var count = 0;
+var sec=0;
+var min=0;
 //時間計算等動態表現
 
 var intervalID = setInterval(setTimer, 1000);
@@ -53,20 +56,28 @@ window.onload = function() {
     
 };
 
-
+function pauseTime(event){
+  if (pause_bt) {
+    pause_bt=false;
+  }
+  else{
+    pause_bt=true;
+  }
+}
 function setTimer(){
   var timer_H=document.getElementById('timers');
-  var sec=0;
-  var min=0;
-  if(count>=60){
-    min=Math.floor(count/60);
-  }
-  sec=count%60;
-  if(sec < 10){
-    sec='0'+sec;
+  if(!pause_bt){
+    if(count>=60){
+      min=Math.floor(count/60);
+    }
+    sec=count%60;
+    if(sec < 10){
+      sec='0'+sec;
+    }
+    count++;
   }
   timer_H.innerHTML=min+' : '+sec;
-  count++;
+  p_videotime=count;
 }
 
 
