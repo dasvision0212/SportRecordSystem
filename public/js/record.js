@@ -5,6 +5,7 @@ var area;
 var p_locationX='';
 var p_locationY='';
 var p_playerID='';
+var p_maker='';
 var p_quality='';
 var p_behavior='';
 var playerName='';
@@ -19,6 +20,8 @@ var g_playerList_NUMBER;
 var g_gid;
 var count = 0;
 //時間計算等動態表現
+
+var intervalID = setInterval(setTimer, 1000);
 var pause_bt=false;
 //onload, load the playerList in the modal
 window.onload = function() {
@@ -38,6 +41,7 @@ window.onload = function() {
         z.setAttribute("id", g_playerList_NUMBER[i]);
         z.setAttribute('class','Name');
         z.setAttribute('onclick','onField(event);');
+        z.setAttribute('value',res.players[i]._id);
         var text = document.createTextNode(g_playerList_NUMBER[i]+'號 '+ g_playerList_NAME[i]);
         z.appendChild(text);  
         modal.appendChild(z);
@@ -50,7 +54,20 @@ window.onload = function() {
 };
 
 
-
+function setTimer(){
+  var timer_H=document.getElementById('timers');
+  var sec=0;
+  var min=0;
+  if(count>=60){
+    min=Math.floor(count/60);
+  }
+  sec=count%60;
+  if(sec < 10){
+    sec='0'+sec;
+  }
+  timer_H.innerHTML=min+' : '+sec;
+  count++;
+}
 
 
 function onDragStart(event) {
@@ -78,6 +95,8 @@ function onDrop(event) {
   dragDiv.setAttribute("id",id);
   dragDiv.style.backgroundColor='white';
   p_playerID=id;
+  p_maker=draggableElement.getAttribute('value');
+  console.log(p_maker);
   playerName=draggableElement.innerHTML+ '<br>';
   /*dropzone.appendChild(draggableElement);*/
   dropArea.appendChild(dragDiv);
@@ -86,9 +105,6 @@ function onDrop(event) {
     dropArea.removeChild(check[0]);
   }
   SubButton.innerHTML= playerName + p_behavior + ' ' + p_quality;
-  console.log(playerName);
-  console.log(p_behavior);
-  console.log(p_quality);
 
   x = Math.max(Math.min(event.clientX-(dragDiv.offsetWidth/2) , area.right- dragDiv.offsetWidth), area.left);
   y = Math.max(Math.min(event.clientY-(dragDiv.offsetHeight/2) , area.bottom- dragDiv.offsetHeight), area.top);
@@ -310,7 +326,7 @@ function submit(event){
         quater:1,
         event: p_behavior,
         sub_type: null,
-        maker: "5ebeb11e5a6c20ed3e900f68",
+        maker: p_maker,
         relateds: ["5ed1244c2cb776dd1e8f32af"],
         comment: 'a good shot',
         time: 87,
@@ -353,6 +369,8 @@ function get(url, body) {
         timeout: 0
     })
 }
+
+//BUTTON OF CHANGINg score
 function changeScore(event){
   //plus
   if(event.currentTarget.getAttribute('id')=="p-ally"){
