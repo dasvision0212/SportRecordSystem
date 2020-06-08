@@ -68,6 +68,10 @@
   					</div>
 				</div>
   			</div>
+  			<div class='ff'>
+  				<div class="end">
+  					<button id='EndButton'>End</button>
+  				</div>
   			<div class="score">
 				<div class='s-button'>
   					<div class="column">
@@ -85,8 +89,10 @@
 				</div>
   			</div>
   			<div class='counting'>
-  				<div id='timer'>HI</div>
+  				<button id='pauseButton' onclick="pauseTime(event)">Pause</button>
+  				<div id='timers'>HI</div>
   			</div>
+  		</div>
 		</div>
 		<div ondragover='onDragOver(event);' ondrop='onDrop(event);' id="field"></div>
 	</div>

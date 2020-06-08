@@ -177,6 +177,23 @@ span{
 }
 #ClearButton{
 }
+.ff{
+	display: flex;
+	align-content: space-between;
+	justify-content: space-between;
+}
+#timers{
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	font-size: 50px;
+}
+#EndButton{
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	font-size: 50px;
+}
 /*field*/
 #field{
 	height:81.5vh;
