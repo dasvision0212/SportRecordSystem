@@ -5,22 +5,22 @@ $('#logout').on('click', function() {
 })
 
 // Menu
-var $showUser = $('#show-user-btn');
-$showUser.on('click', function(e){
-    $.ajax({
-        "url": "/api/user/self",
-        "method": "GET",
-      })
-      .done(function (res) {
-    
-        $('#show-user').text(JSON.stringify(res, null, 2));
-        var account = res.account;
-        $('.author-card-name').text(account);
-        console.log(res);
-      })
-      .fail(function(error) {
-        console.log(error)     
-    })
+$.ajax({
+    "url": "/api/user/self",
+    "method": "GET",
+  })
+  .done(function (res) {
+
+    $('#show-user').text(JSON.stringify(res, null, 2));
+    var account = res.account;
+    $('.author-card-name').text(account);
+    $('#your-teams-num').text('1')
+
+    console.log(res);
+
+  })
+  .fail(function(error) {
+    console.log(error)     
 })
 
 var $menu = $('#menu');
@@ -29,6 +29,9 @@ $menu.on('click', function(e) {
     if ($target.is('li')) {
         $menu.find('li').removeClass('active');
         $target.addClass('active');
+
+        $('.page').addClass('hide')
+        $($target.attr('target')).removeClass('hide')
     }
 })
 
@@ -74,7 +77,6 @@ $('#add-player').on('submit', function(e) {
 
 
 // Team
-
 $('#add-team').on('submit', function(e) {
     e.preventDefault();
 
@@ -94,21 +96,7 @@ $('#add-team').on('submit', function(e) {
         console.log(error)        
     })
 })
-var $showTeam = $('#show-team-btn');
-$showTeam.on('click', function(e){
-    $.ajax({
-        "url": "/api/user/self/team",
-        "method": "GET",
-      })
-      .done(function (res) {
-    
-        $('#show-team').text(JSON.stringify(res, null, 2));
-        console.log(res);
-      })
-      .fail(function(error) {
-        console.log(error)     
-    })
-})
+
 
 function post(url, body) {
     return $.ajax({

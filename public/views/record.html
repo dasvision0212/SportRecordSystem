@@ -43,6 +43,8 @@
 		<div id="player" >
   			<div id="table-scroll">
   				<table id="PlayerOnTheField">
+  					<td>
+  					</td>
 				</table>
 			</div>
 		</div>
@@ -70,7 +72,7 @@
   			</div>
   			<div class='ff'>
   				<div class="end">
-  					<button id='EndButton'>End</button>
+  					<button id='EndButton' onclick="backtoTeam(event)">End</button>
   				</div>
   			<div class="score">
 				<div class='s-button'>
@@ -90,11 +92,13 @@
   			</div>
   			<div class='counting'>
   				<button id='pauseButton' onclick="pauseTime(event)">Pause</button>
-  				<div id='timers'>HI</div>
+  				<div id='timers'>0 : 00</div>
   			</div>
   		</div>
 		</div>
-		<div ondragover='onDragOver(event);' ondrop='onDrop(event);' id="field"></div>
+		<div ondragover='onDragOver(event);' ondrop='onDrop(event);' id="field" >
+			<div id='fieldImg'></div>
+		</div>
 	</div>
 	<div class="rig">
 		<div class="down-left">
@@ -121,7 +125,9 @@
 		</div>
 		<div class="down-right">
 			<div class="Sub">
-  				<button id="SubButton" onclick='submit(event)' >Submit</button>
+  				<button id="SubButton_plus" onclick='submit(event)' >得分</button>
+  				<button id="SubButton" onclick='submit(event)' >不變</button>
+  				<button id="SubButton_minus" onclick='submit(event)' >失分</button>
 			</div>
 			<div class="History">
 				<div id="board">

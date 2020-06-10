@@ -20,7 +20,7 @@ span{
 
 .mid{
 	width: 70vw;
-	height: 60vh;
+	height: 70vh;
     border: 0.1px solid #3B6273;
     display: flex;
     flex-direction:column ;
@@ -28,7 +28,7 @@ span{
 }
 .rig{
 　	width: 70vw;
-	height: 37vh;
+	height: 27vh;
     display: flex;
     border: 0.1px solid #3B6273;
 }
@@ -79,6 +79,7 @@ span{
 }
 .Sub{	
 	display: flex;
+	flex-direction: column;
 	align-content: center;
 	justify-content: center;
 	margin-top: 5vh;
@@ -149,7 +150,6 @@ span{
 	justify-content: center;
 	font-size: 35px;
 }
-
 #a-gap{
 	font-size: 6vh;
 	width: 5vw;
@@ -196,11 +196,21 @@ span{
 }
 /*field*/
 #field{
-	height:81.5vh;
+	width: 70vw;
+	height:50vh;
+	border: 0.5px solid #3B6273;
 	background-color: yellow;
+	display: flex;
+	justify-content: center;
+	align-content: center;
 }
+#fieldImg{
+	width: 40vw;
+	height:20vh;;
+	background-image: url(../img/volleyball_court_rotate.png);
+	background-size: 40vw 20vh;
 
-
+}
 /*player*/
 .NameDragable{
 	padding-left: 5vw;
@@ -320,6 +330,11 @@ span{
 }
 /*sub*/
 #SubButton{	
-	font-size: 30px;
+	font-size: 15px;
 }
-
+#SubButton_plus{	
+	font-size: 15px;
+}
+#SubButton_minus{	
+	font-size: 15px;
+}

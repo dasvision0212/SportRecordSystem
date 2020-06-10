@@ -52,35 +52,32 @@
                 </div>
 
                 <ul class="list-group" id="menu">
-                    <li class="list-group-item active">
+                    <li class="list-group-item active" target="#add-team">
                         Add Team
                     </li>
-                    <li class="list-group-item" id="team-li" data-toggle="collapse" data-target="#team-list">
-                        Your Teams<span class="badge badge-pill badge-secondary"style="float:right">2</span>
+                    <li class="list-group-item" target="#your-teams" id="team-li" data-toggle="collapse" data-target="#team-list">
+                        Your Teams<span id="your-teams-num" class="badge badge-pill badge-secondary"style="float:right"></span>
                     </li>
-                    <div id="team-list" class="collapse" >
+                    <!-- <div id="team-list" class="collapse" >
                         <ul class="list-group">
                             <li class="list-group-item">Team1</li>
                             <li class="list-group-item">Team2</li>
                         </ul>
-                    </div>
-                    <li class="list-group-item">
+                    </div> -->
+                    <li class="list-group-item"  target="#add-player">
                         Add Player
                     </li>
-                    <li class="list-group-item">
-                        Your Players<span class="badge badge-pill badge-secondary"style="float:right">3</span>
-                    </li>
                 </ul>
-                <div id="show-user"  class="show-obj"></div>
-                <button id="show-user-btn">檢視使用者</button>
             </div>
 
             <div class="col-lg-8">
+                <div class="page hide" id="your-teams">
+                    <div id="show-player"  class="show-obj"></div>
+                    <button id="show-player-btn">檢視球員資料</button>
+                </div>
 
-                <div id="show-player"  class="show-obj"></div>
-                <button id="show-player-btn">檢視球員資料</button>
 
-                <form class="row" id="add-player">
+                <form class="row page hide" id="add-player">
                     <div class="col-md-12">
                         <h2>Add Player</h2>
                     </div>
@@ -129,11 +126,7 @@
                     </div>
                 </form>
 
-
-
-                <div id="show-team" class="show-obj"></div>
-                <button id="show-team-btn">檢視球隊資料</button>
-                <form class="row" id="add-team">
+                <form class="row page" id="add-team">
                     <div class="col-md-12">
                         <h2>Add Team</h2>
                     </div>
