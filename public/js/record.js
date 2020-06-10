@@ -1,5 +1,3 @@
-
-/*Dragging*/
 var dragDiv;
 var area;
 var p_locationX='';
@@ -14,6 +12,7 @@ var p_enemyScore=0;
 var p_allyGap=0;
 var p_enemyGap=0;
 var p_videotime=0;
+var p_subtype='';
 var dragArea;
 var subButton=document.getElementById('SubButton');
 var g_playerList_NAME;
@@ -22,6 +21,8 @@ var g_gid;
 var count = 0;
 var sec=0;
 var min=0;
+const plusTxt='得分';
+const minusTxt='失分';
 //時間計算等動態表現
 
 var intervalID = setInterval(setTimer, 1000);
@@ -53,7 +54,21 @@ window.onload = function() {
     .fail(function(error) {
         console.log(error)      
     })
-    
+
+    var t=document.getElementById('PlayerOnTheField');
+    var y = document.createElement("TR");
+    t.appendChild(y);
+
+    var z = document.createElement("TD");
+    z.setAttribute("id", '87');
+    z.setAttribute('class','NameDragable');
+    z.setAttribute('ondragstart','onDragStart(event);');
+    z.setAttribute("draggable",true);
+    z.setAttribute('value','548754875487548754875487')
+    var text = document.createTextNode('敵方對手');
+    z.appendChild(text);
+    z.style.backgroundColor='yellow';  
+    t.appendChild(z);
 };
 
 function pauseTime(event){
@@ -219,6 +234,7 @@ function onField(event) {
     }
 
   }
+
 }
 //use for checking if the player is on the board or not
 function check(event){
@@ -313,37 +329,72 @@ function submit(event){
   dropArea.removeChild(check[0]);
   SubButton.innerHTML= 'Submit';
 
-  console.log(p_playerID);
-  console.log(p_behavior);
-  console.log(p_quality);
-  console.log(p_locationX);
-  console.log(p_locationY);
   if(p_quality=='A'){
     p_quality=100;
+    /*if(p_behavior =='ATK'||p_behavior =='BLOCK'||p_behavior =='SERVE'){
+      var temp =document.getElementById('a-score');
+      temp.innerHTML=p_allyScore+1;
+      p_allyScore++;
+    }*/
   }
   if(p_quality=='B'){
     p_quality=80;
   }
   if(p_quality=='C'){
     p_quality=60;
+    /*if(p_playerID=='87'){
+      var temp =document.getElementById('a-score');
+      temp.innerHTML=p_allyScore+1;
+      p_allyScore++;
+    }
+    else{
+      var temp =document.getElementById('e-score');
+      temp.innerHTML=p_enemyScore+1;
+      p_enemyScore++;
+    }*/
+
   }
   if (p_quality=='D') {
     p_quality=0;
+    /*if(p_playerID=='87'){
+      var temp =document.getElementById('a-score');
+      temp.innerHTML=p_allyScore+1;
+      p_allyScore++;
+    }
+    else{
+      var temp =document.getElementById('e-score');
+      temp.innerHTML=p_enemyScore+1;
+      p_enemyScore++;
+    }*/
+
   }
+
+  if(event.currentTarget.getAttribute('id')=='SubButton_plus'){
+    var temp =document.getElementById('a-score');
+    temp.innerHTML=p_allyScore+1;
+    p_allyScore++;
+  }
+  else if(event.currentTarget.getAttribute('id')=='SubButton_minus'){
+    var temp =document.getElementById('e-score');
+    temp.innerHTML=p_enemyScore+1;
+    p_enemyScore++;
+  }
+  /*else{
+
+  }*/
   var d=new Date();
   var body = {
         date: d.getTime(),
-        time:87,
+        time:p_videotime,
         quater:1,
         event: p_behavior,
-        sub_type: null,
+        sub_type: '1',
         maker: p_maker,
         relateds: ["5ed1244c2cb776dd1e8f32af"],
-        comment: 'a good shot',
-        time: 87,
-        value: p_quality,
-        x_loc: p_locationX,
-        y_loc: p_locationY,
+        comment: 'a good shot!!!!!!!!!!!!!!',
+        value: 10,
+        x_loc: Math.floor(p_locationX),
+        y_loc: Math.floor(p_locationY),
        
   }
       post('/api/game/'+g_gid+'/record',body)
@@ -358,6 +409,7 @@ function submit(event){
   p_locationX=' ';
   p_locationY=' ';
   p_playerID=' ';
+  p_subtype=' ';
 }
 
 function post(url, body) {
@@ -448,11 +500,13 @@ function changeGap(event){
 }
 
 function clears(){
-  console.log('hi');
   var temp =document.getElementById('a-score');
   p_allyScore=0;
   temp.innerHTML='0';
   temp =document.getElementById('e-score');
   p_enemyScore=0;
   temp.innerHTML='0';
+}
+function backtoTeam(event){
+  window.location.href='/team';
 }

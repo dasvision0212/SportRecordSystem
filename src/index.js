@@ -41,12 +41,14 @@ app.get('/history', (req, res) => {
     }
     res.sendFile(path.join(publicDirPath, 'views/history.html'));
 })
+
 app.get('/record', (req, res) => {
     if(!req.cookies.session) {
-        res.sendFile(path.join(publicDirPath, 'views/login.html'));
+        res.sendFile(path.join(publicDirPath, 'views/record.html'));
     }
-    res.send('record page!');
+    res.sendFile(path.join(publicDirPath, 'views/record.html'));
 })
+
 app.get('/team', (req, res) => {
     if(!req.cookies.session) {
         res.sendFile(path.join(publicDirPath, 'views/login.html'));
@@ -56,9 +58,7 @@ app.get('/team', (req, res) => {
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(publicDirPath, 'views/signup.html'));
 })
-app.get('/record123', (req, res) => {
-    res.sendFile(path.join(publicDirPath, 'views/record.html'));
-})
+
 app.get('/login', (req, res) => {
     res.sendFile(path.join(publicDirPath, 'views/login.html'));
 })
