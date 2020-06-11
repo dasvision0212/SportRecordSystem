@@ -95,7 +95,9 @@ function setTimer(){
   p_videotime=count;
 }
 
-
+function getLog(){
+  document.getElementById('board');
+}
 function onDragStart(event) {
   event.dataTransfer.setData('text', event.target.id);
 }

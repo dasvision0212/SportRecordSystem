@@ -48,7 +48,12 @@ app.get('/record', (req, res) => {
     }
     res.sendFile(path.join(publicDirPath, 'views/record.html'));
 })
-
+app.get('/getstart', (req, res) => {
+    if(!req.cookies.session) {
+        res.sendFile(path.join(publicDirPath, 'views/newgame.html'));
+    }
+    res.sendFile(path.join(publicDirPath, 'views/newgame.html'));
+})
 app.get('/team', (req, res) => {
     if(!req.cookies.session) {
         res.sendFile(path.join(publicDirPath, 'views/login.html'));

@@ -82,8 +82,8 @@ span{
 	flex-direction: column;
 	align-content: center;
 	justify-content: center;
-	margin-top: 5vh;
-	margin-bottom: 5vh;
+	margin-top: 2vh;
+	
 }
 /*little function*/
 /*ScoreBoard*/
@@ -330,11 +330,17 @@ span{
 }
 /*sub*/
 #SubButton{	
+	margin-top:2vh;
 	font-size: 15px;
+	display: flex;
+	text-align: center;
+	align-content: center;
+	justify-content: center;
 }
-#SubButton_plus{	
+#SubButton_plus{
 	font-size: 15px;
 }
 #SubButton_minus{	
+	margin-top:2vh;
 	font-size: 15px;
 }
