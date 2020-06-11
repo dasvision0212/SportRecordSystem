@@ -1,18 +1,52 @@
 let myTeam;
 
+let mainStatsTitle = {
+    serve_error_rate: '發失率',
+    receive_error_rate: '接失率',
+    attack_error_rate: '攻失率',
+    attack_score_rate: '攻擊率',
+    block_score_rate: '攔網率',
+};
+
+let detailedStatsTitle = [
+    {
+        title: '基本資料',
+        objects: {
+            grade: '年級',
+            birth: '生日',
+        }
+    },
+    {
+        title: '攻擊',
+        objects: {
+            attack_times: '攻擊次數',
+            avg_attack_times_per_game: '每局平均攻擊次數',
+        }
+    },
+    {
+        title: '防守',
+        objects: {
+            receive_times: '接球次數',
+            block_times: '攔網次數',
+            avg_receive_times_per_game: '每局平均接球次數',
+            avg_block_times_per_game: '每局平均攔網次數',
+        }
+    }
+]
+
 $.ajax({
     "url": "/api/user/self/team",
     "method": "GET",
-    })
+})
     .done(function (res) {
         myTeam = res;
-
         fetchMatchRecord();
         fetchPlayerList();
+        initPlayerInfo();
     })
     .fail(function (error) {
         console.log(error);
-})
+    })
 
 $(document).ready(() => { resizeCanvas(); drawPlot('serve', {}); });
 
@@ -120,7 +154,7 @@ function fetchMatchRecord() {
 
 function renderMatch(match) {
     var gameTitle = ['第一局', '第二局', '第三局', '第四局', '第五局'];
-    var statsTitle = ['攻擊得分', '攔網得分', 'Ace', '失誤得分', '一傳失誤率'];
+    var mainStatsTitle = ['攻擊得分', '攔網得分', 'Ace', '失誤得分', '一傳失誤率'];
 
     var ownedTeam = '台大資管'; //temp
     var oppositeTeam = (match.guest == ownedTeam) ? match.master : match.guest;
@@ -141,7 +175,7 @@ function renderMatch(match) {
         }
     }
     for (var i = 0; i < 5; i++) {
-        row += "<li class='list-group-item stats'><p>" + statsTitle[i] + "</p>"
+        row += "<li class='list-group-item stats'><p>" + mainStatsTitle[i] + "</p>"
         if (i == 0) {
             row += "<h3>" + "</h3></li>";
         }
@@ -176,30 +210,29 @@ function formatDate(date) {
 };
 
 function formatRate(rate) {
-    if (rate >= 1){
+    if (rate >= 1) {
         return rate.toFixed(3);
     }
     return rate.toFixed(3).substr(1);
 }
 
 function fetchPlayerList() {
-    
-    myTeam.players.map((player) => {renderPlayerRow(player)});
+    $.when.apply($, myTeam.players.map(player => getPlayerRecord(player)))
+        .done(function () {
+            myTeam.players.map((player) => {
+                getPlayerMainStats(player);
+                getPlayerDetailedStats(player);
+                renderPlayerRow(player);
+            })
+        })
+        .fail(error => console.log(error));
     renderTableHead();
 }
 
 function renderTableHead() {
-
-    var statsTitle = {
-        serve_error_rate: '發失率',
-        receive_error_rate: '接失率',
-        attack_error_rate: '攻失率',
-        attack_score_rate: '攻擊率',
-        block_score_rate: '攔網率'
-    };
     var head = "<tr><th scope=\"col\">選手</th>"
-    Object.keys(statsTitle).forEach(function (key) {
-        title = statsTitle[key];
+    Object.keys(mainStatsTitle).forEach(function (key) {
+        title = mainStatsTitle[key];
         head += "<th scope=\"col\">" + title + "</th>";
     });
     head += "</tr>"
@@ -207,51 +240,53 @@ function renderTableHead() {
 }
 
 function renderPlayerRow(player) {
+    var row = ""
+    row += "<tr onclick=\"window.location='#chart';\" class=\"player-row\" id=\"" + player._id + "\"><th scope='row'>" + player.name + "</th>";
 
-    var statsTitle = {
-        serve_error_rate: '發失率',
-        receive_error_rate: '接失率',
-        attack_error_rate: '攻失率',
-        attack_score_rate: '攻擊率',
-        block_score_rate: '攔網率'
-    };
-    $.when(getPlayerStats(player._id)).done(function(){
-        var row = ""
-        row += "<tr onclick=\"window.location='#chart';\" class=\"player-row\" id=\"" + player._id + "\"><th scope='row'>" + player.name + "</th>";
-    
-        Object.keys(statsTitle).forEach(function (key) {
-            row += "<td>" + formatRate(player[key]) + "</td>";
-        });
-        row += "</tr>";
-        $(".tab-content .player-table").append(row);
-        $('.player-row').on('click', function () {
-            renderPlayerInfo($(this).attr("id"));
-        })
+    Object.keys(mainStatsTitle).forEach(function (key) {
+        row += "<td>" + formatRate(player[key]) + "</td>";
+    });
+    row += "</tr>";
+    $(".tab-content .player-table").append(row);
+    $('.player-row').on('click', function () {
+        renderPlayerInfoById($(this).attr("id"));
     })
 }
 
 
-function getPlayerStats(pid) {
+function getPlayerRecord(player) {
+    var pid = player._id;
     return $.ajax({
-        "url": "/api/records/maker/" + pid.toString(),
+        "url": "/api/records/maker/" + player._id.toString(),
         "method": "GET",
     })
-    .done(function (res) {
-        var records = res;
-        console.log(records)
-        var player = myTeam.players.find((player) => player._id == pid);
-        player['serve_error_rate'] = getServeErrorRate(records);
-        player['receive_error_rate'] = getReceiveErrorRate(records);
-        player['attack_error_rate'] = getAttackErrorRate(records);
-        player['attack_score_rate'] = getAttackScoreRate(records);
-        player['block_score_rate'] = getBlockScoreRate(records);
-    })
-    .fail(function (error) {
-        console.log(error);
-    })
+        .done(function (res) {
+            var player = myTeam.players.find((p) => p._id == pid);
+            player['records'] = res;
+        })
+        .fail(function (error) {
+            console.log(error);
+        })
 }
 
-function renderPlayerInfo(pid) {
+function getPlayerMainStats(player) {
+    player['serve_error_rate'] = getServeErrorRate(player['records']);
+    player['receive_error_rate'] = getReceiveErrorRate(player['records']);
+    player['attack_error_rate'] = getAttackErrorRate(player['records']);
+    player['attack_score_rate'] = getAttackScoreRate(player['records']);
+    player['block_score_rate'] = getBlockScoreRate(player['records']);
+}
+
+function getPlayerDetailedStats(player) {
+    player['attack_times'] = getAttackTimes(player['records']);
+    player['avg_attack_times_per_game'] = getAvgAttackTimesPerGame(player['records']);
+    player['receive_times'] = getReceiveTimes(player['records']);
+    player['block_times'] = getBlockTimes(player['records']);
+    player['avg_receive_times_per_game'] = getAvgReceiveTimesPerGame(player['records']);
+    player['avg_block_times_per_game'] = getAvgBlockTimesPerGame(player['records']);
+}
+
+function renderPlayerInfoById(pid) {
     // find player by playerName
     var player = myTeam.players.find((player) => player._id == pid);
     $(".plot-info #name").contents().filter(function () {
@@ -259,60 +294,101 @@ function renderPlayerInfo(pid) {
     })[0].nodeValue = player.name
     $(".plot-info #pos").html(player.position);
 
-    $.ajax({
-        "url": "/api/records/maker/" + pid.toString(),
-        "method": "GET",
-    })
-    .done(function (res) {
-        var records = res;
-        console.log(res);
-    })
-    .fail(function (error) {
-        console.log(error);
+    var row = ""
+    Object.keys(mainStatsTitle).forEach(function (key) {
+        $(".plot-info #" + key).html(formatRate(player[key]));
+    });
+
+    detailedStatsTitle.map(field => {
+        Object.keys(field.objects).forEach(key => {
+            $(".plot-info #" + key).html((player[key]));
+        })
     })
 }
 
-function getServeErrorRate(records){
+function initPlayerInfo() {
+    var row = ""
+    Object.keys(mainStatsTitle).forEach(function (key) {
+        row += "<li class=\"list-group-item\"><span id=\"" + key + "\"> </span>" + mainStatsTitle[key] + "</li>";
+    });
+    $(".plot-info .info-overview ul").append(row);
+
+    var row = ""
+    detailedStatsTitle.map(field => {
+        row += "<tr class=\"section-head\"><th scope=\"row\" colspan=\"2\">" + field.title + "</th></tr>";
+        Object.keys(field.objects).forEach(key => {
+            row += "<tr><th scope=\"row\">" + field.objects[key] + "</th><td id=\"" + key + "\"> </td></tr>"
+        })
+    })
+
+    $(".plot-info .info-detailed tbody").append(row);
+}
+
+function getServeErrorRate(records) {
     var error_count = records.filter((rec) => rec.event == "SERVE" && rec.value <= 60).length;
     var serve_count = records.filter((rec) => rec.event == "SERVE").length;
-    if (serve_count == 0){
+    if (serve_count == 0) {
         return 0.0;
     }
     return error_count / serve_count;
 }
 
-function getReceiveErrorRate(records){
+function getReceiveErrorRate(records) {
     var error_count = records.filter((rec) => rec.event == "DIG" && rec.value <= 60).length;
     var receive_count = records.filter((rec) => rec.event == "DIG").length;
-    if (receive_count == 0){
+    if (receive_count == 0) {
         return 0.0;
     }
     return error_count / receive_count;
 }
 
-function getAttackErrorRate(records){
+function getAttackErrorRate(records) {
     var error_count = records.filter((rec) => rec.event == "ATK" && rec.value <= 60).length;
     var attack_count = records.filter((rec) => rec.event == "ATK").length;
-    if (attack_count == 0){
+    if (attack_count == 0) {
         return 0.0;
     }
     return error_count / attack_count;
 }
 
-function getAttackScoreRate(records){
+function getAttackScoreRate(records) {
     var score_count = records.filter((rec) => rec.event == "ATK" && rec.value > 80).length;
     var attack_count = records.filter((rec) => rec.event == "ATK").length;
-    if (attack_count == 0){
+    if (attack_count == 0) {
         return 0.0;
     }
     return score_count / attack_count;
 }
 
-function getBlockScoreRate(records){
+function getBlockScoreRate(records) {
     var score_count = records.filter((rec) => rec.event == "BLOCK" && rec.value > 80).length;
     var block_count = records.filter((rec) => rec.event == "BLOCK").length;
-    if (block_count == 0){
+    if (block_count == 0) {
         return 0.0;
     }
     return score_count / block_count;
+}
+
+function getAttackTimes(records) {
+    return records.filter((rec) => rec.event == "ATK").length;
+}
+
+function getAvgAttackTimesPerGame(records) {
+    return 0;
+}
+
+function getReceiveTimes(records) {
+    return records.filter((rec) => rec.event == "DIG").length;
+}
+
+function getAvgReceiveTimesPerGame(records) {
+    return 0;
+}
+
+function getBlockTimes(records) {
+    return records.filter((rec) => rec.event == "BLOCK").length;
+}
+
+function getAvgBlockTimesPerGame(records) {
+    return 0;
 }
