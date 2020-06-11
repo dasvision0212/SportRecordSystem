@@ -193,12 +193,61 @@ nav {
 }
 
 .stats-plots{
-    height: 95vh;
+    height: 90vh;
 }
 
 .stats-plots .plot-info{
     padding-top: 3%;
     padding-left: 5%;
+    height: 80%;
+}
+
+.stats-plots .plot-info .row{
+    height: 100%;
+}
+
+.stats-plots .plot-info .info-overview{
+    padding-top: 40px;
+}
+
+.stats-plots .plot-info .info-detailed{
+    padding-top: 0;
+    height: 100%;
+    overflow: auto;
+}
+
+.stats-plots .plot-info table{
+    border-collapse: collapse; 
+}
+
+.stats-plots .plot-info td{
+    border: 0 none;
+}
+
+.stats-plots .plot-info th{
+    border: 0 none;
+    font-weight: 400;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.stats-plots .plot-info td{
+    border: 0 none;
+    font-weight: 400;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.stats-plots .plot-info .section-head th{
+    border-bottom: 0.25px solid;
+    font-weight: 700;
+}
+
+
+caption{
+    caption-side: top;
+    font-size: 18pt;
+    text-align: center;
 }
 
 .stats-plots .plot-info #name{
@@ -210,6 +259,14 @@ nav {
     font-weight: 400;
     margin-left: 20px;
     font-size: 20pt;
+}
+
+.stats-plots .plot-info .stats span{
+    color: #555555;
+    font-weight: 400;
+    margin-left: 20px;
+    font-size: 28pt;
+    float: right;
 }
 
 .stats-plots .plot-info .list-group.stats{
@@ -226,9 +283,6 @@ nav {
 
 .stats-plots .plot-body{
     min-height: 100px;
-}
-
-.stats-plots .plot-body img{
 }
 
 

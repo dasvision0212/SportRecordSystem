@@ -169,23 +169,9 @@
                 <div class="main-table container-fluid padding">
                     <table class="table player-table">
                         <thead>
-                            <tr>
-                                <th scope="col">選手</th>
-                                <th scope="col">發失率</th>
-                                <th scope="col">接失率</th>
-                                <th scope="col">攻失率</th>
-                                <th scope="col">攻擊率</th>
-                                <th scope="col">攔網率</th>
-                            </tr>
                         </thead>
                         <tbody>
                             <tr onclick="window.location='#chart';">
-                                <th scope="row">黃心</th>
-                                <td>.990</td>
-                                <td>.880</td>
-                                <td>.793</td>
-                                <td>.320</td>
-                                <td>.550</td>
                             </tr>
                         </tbody>
                     </table>
@@ -194,15 +180,23 @@
         </div>
         <hr>
         <div class="stats-plots row" id="chart">
-            <div class="col-8 plot-info">
-                <h1 id="name">黃心<span id="pos">攔中</span></h1>
-                <ul class="list-group stats">
-                    <li class="list-group-item">發失率</li>
-                    <li class="list-group-item">接失率</li>
-                    <li class="list-group-item">攻失率</li>
-                    <li class="list-group-item">攻擊率</li>
-                    <li class="list-group-item">攔網率</li>
-                </ul>
+            <div class="col-8  plot-info">
+                <h1 id="name"> <span id="pos"> </span></h1>
+                <div class="row">
+                    <div class="col-6 info-overview">
+                        <ul class="list-group stats">
+                        </ul>
+                    </div>
+                    <div class="col-6 info-detailed">
+                        <div class="info-detailed-table container-fluid padding">
+                            <table class="table">
+                                <caption>詳細數據</caption>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-3 plot">
                 <div class="row dropdown plot-list">
