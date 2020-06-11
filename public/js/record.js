@@ -97,6 +97,7 @@ function setTimer(){
 
 function getLog(){
   document.getElementById('board');
+
 }
 function onDragStart(event) {
   event.dataTransfer.setData('text', event.target.id);
@@ -412,6 +413,7 @@ function submit(event){
   p_locationY=' ';
   p_playerID=' ';
   p_subtype=' ';
+  playerName=' ';
 }
 
 function post(url, body) {
