@@ -35,6 +35,7 @@ app.use(cors());
 app.get('/', function(req, res){
     res.sendFile(path.join(publicDirPath, 'views/home.html'));
 });
+
 app.get('/history', (req, res) => {
     if(!req.cookies.session) {
         res.sendFile(path.join(publicDirPath, 'views/login.html'));
@@ -44,16 +45,18 @@ app.get('/history', (req, res) => {
 
 app.get('/record', (req, res) => {
     if(!req.cookies.session) {
-        res.sendFile(path.join(publicDirPath, 'views/record.html'));
+        res.sendFile(path.join(publicDirPath, 'views/login.html'));
     }
     res.sendFile(path.join(publicDirPath, 'views/record.html'));
 })
+
 app.get('/getstart', (req, res) => {
     if(!req.cookies.session) {
-        res.sendFile(path.join(publicDirPath, 'views/newgame.html'));
+        res.sendFile(path.join(publicDirPath, 'views/login.html'));
     }
-    res.sendFile(path.join(publicDirPath, 'views/newgame.html'));
+    res.sendFile(path.join(publicDirPath, 'views/getstart.html'));
 })
+
 app.get('/team', (req, res) => {
     if(!req.cookies.session) {
         res.sendFile(path.join(publicDirPath, 'views/login.html'));

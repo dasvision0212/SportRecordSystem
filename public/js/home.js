@@ -10,12 +10,6 @@ else {
 
 $(".animated").addClass("delay-1s");
 
-// logout -> expires session
-$('#logout').on('click', function() {
-    document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.location.href = '/';
-})
-
 $('#disclaimer-knew').on('click', function(e) {
     $(e.target).text('感謝您的諒解');
 })

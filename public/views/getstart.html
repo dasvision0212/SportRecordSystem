@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sport Record System</title>
+
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+
+    <link rel="stylesheet" href="css/getstart.css" id="pagestyle">
+    <link rel="stylesheet" href="css/getstart1.css" id="pagestyle">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">    
+</head>
+<body>
+
+
+    <!-- Navigation Section -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
+        <a class="navbar-brand" href="/">SportReportSystem</a>   
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsResponsive" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+            <li class="nav-item"><a class="nav-link" href="/record">Record</a></li>
+            <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
+            <li class="nav-item"><a class="nav-link" href="/team">Team</a></li>
+            <li class="nav-item" id="logout" onclick="document.cookie='session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';document.location.href = '/';"><a class="nav-link">Log Out</a></li>
+          </ul>
+        </div>
+    </nav>
+
+ 
+
+    <div class="main">
+
+      <div class="container">
+          <form method="POST" id="signup-form" class="signup-form" action="#">
+              <div>
+                  <h3>Personal info</h3>
+                  <fieldset>
+                      <h2>Personal information</h2>
+                      <p class="desc">Please enter your infomation and proceed to next step so we can build your account</p>
+                      <div class="fieldset-content">
+                          <div class="form-row">
+                              <label class="form-label">Name</label>
+                              <div class="form-flex">
+                                  <div class="form-group">
+                                      <input type="text" name="first_name" id="first_name" />
+                                      <span class="text-input">First</span>
+                                  </div>
+                                  <div class="form-group">
+                                      <input type="text" name="last_name" id="last_name" />
+                                      <span class="text-input">Last</span>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="email" class="form-label">Email</label>
+                              <input type="email" name="email" id="email" />
+                              <span class="text-input">Example  :<span>  Jeff@gmail.com</span></span>
+                          </div>
+                          <div class="form-group">
+                              <label for="phone" class="form-label">Phone</label>
+                              <input type="text" name="phone" id="phone" />
+                          </div>
+                          <div class="form-date">
+                              <label for="birth_date" class="form-label">Birth Date</label>
+                              <div class="form-date-group">
+                                  <div class="form-date-item">
+                                      <select id="birth_month" name="birth_month"></select>
+                                      <span class="text-input">MM</span>
+                                  </div>
+                                  <div class="form-date-item">
+                                      <select id="birth_date" name="birth_date"></select>
+                                      <span class="text-input">DD</span>
+                                  </div>
+                                  <div class="form-date-item">
+                                      <select id="birth_year" name="birth_year"></select>
+                                      <span class="text-input">YYYY</span>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="ssn" class="form-label">SSN</label>
+                              <input type="text" name="ssn" id="ssn" />
+                          </div>
+                      </div>
+                  </fieldset>
+
+                  <h3>Connect Bank Account</h3>
+                  <fieldset>
+                      <h2>Connect Bank Account</h2>
+                      <p class="desc">Please enter your infomation and proceed to next step so we can build your account</p>
+                      <div class="fieldset-content">
+                          <div class="form-group">
+                              <label for="find_bank" class="form-label">Find Your Bank</label>
+                              <div class="form-find">
+                                  <input type="text" name="find_bank" id="find_bank" placeholder="Ex. Techcombank" />
+                                  <input type="submit" value="Search" class="submit">
+                                  <span class="form-icon"><i class="zmdi zmdi-search"></i></span>
+                              </div>
+                          </div>
+                          <div class="choose-bank">
+                              <p class="choose-bank-desc">Or choose from these popular bank</p>
+                              <div class="form-radio-flex">
+                                  <div class="form-radio-item">
+                                      <input type="radio" name="choose_bank" id="bank_1" value="bank_1" checked="checked" />
+                                      <label for="bank_1"><img src="images/bank-1.jpg" alt=""></label>
+                                  </div>
+
+                                  <div class="form-radio-item">
+                                      <input type="radio" name="choose_bank" id="bank_2" value="bank_2" />
+                                      <label for="bank_2"><img src="images/bank-2.jpg" alt=""></label>
+                                  </div>
+
+                                  <div class="form-radio-item">
+                                      <input type="radio" name="choose_bank" id="bank_3" value="bank_3" />
+                                      <label for="bank_3"><img src="images/bank-3.jpg" alt=""></label>
+                                  </div>
+
+                                  <div class="form-radio-item">
+                                      <input type="radio" name="choose_bank" id="bank_4" value="bank_4" />
+                                      <label for="bank_4"><img src="images/bank-4.jpg" alt=""></label>
+                                  </div>
+
+                                  <div class="form-radio-item">
+                                      <input type="radio" name="choose_bank" id="bank_5" value="bank_5" />
+                                      <label for="bank_5"><img src="images/bank-5.jpg" alt=""></label>
+                                  </div>
+
+                                  <div class="form-radio-item">
+                                      <input type="radio" name="choose_bank" id="bank_6" value="bank_6" />
+                                      <label for="bank_6"><img src="images/bank-6.jpg" alt=""></label>
+                                  </div>
+                                  
+                                  <div class="form-radio-item">
+                                      <input type="radio" name="choose_bank" id="bank_7" value="bank_7" />
+                                      <label for="bank_7"><img src="images/bank-7.jpg" alt=""></label>
+                                  </div>
+
+                                  <div class="form-radio-item">
+                                      <input type="radio" name="choose_bank" id="bank_8" value="bank_8" />
+                                      <label for="bank_8"><img src="images/bank-8.jpg" alt=""></label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </fieldset>
+
+                  <h3>Set Financial Goals</h3>
+                  <fieldset>
+                      <h2>Set Financial Goals</h2>
+                      <p class="desc">Set up your money limit to reach the future plan</p>
+                      <div class="fieldset-content">
+                          <div class="donate-us">
+                              <div class="price_slider ui-slider ui-slider-horizontal">
+                                  <div id="slider-margin"></div>
+                                  <p class="your-money">
+                                      Your money you can spend per month :
+                                      <span class="money" id="value-lower"></span>
+                                      <span class="money" id="value-upper"></span>
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                  </fieldset>
+              </div>
+          </form>
+      </div>
+
+  </div>
+
+    <!-- Footer -->
+    <footer>
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-12">
+                <h5>&copy; ntuimvolleyball.com</h5>
+            </div>
+        </div>
+    </div>
+    </footer>
+
+    <script type="text/javascript" src="js/getstart.js"></script>
+    <script type="text/javascript" src="js/getstart1.js"></script>
+
+</body>
+</html>
