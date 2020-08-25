@@ -162,9 +162,10 @@ function renderMatch(match) {
     var isVictory = isGuest ? (match.g_point > match.m_point) : (match.g_point < match.m_point);
     var totalGames = match.g_point + match.m_point;
     var row = '';
-    row += "<a href='#chart' class='btn match-record'><div class='card " + (isVictory ? "victory" : "defeat") + "'><div class='row'><div class='card-leading'></div><div class='col card-content'><ul class='list-group list-group-horizontal'>";
-    row += "<li class='list-group-item lineup'><b> vs. &nbsp " + oppositeTeam + "</b>";
+    row += "<a href='#chart' class='btn match-record'><div class='card " + (isVictory ? "victory" : "defeat") + "'><div class='row'><div class='lineup'>";
+    row += "<b> vs. &nbsp " + oppositeTeam + "</b>";
     row += "<p>" + formatDate(match.date) + "</p></li>";
+    row += "</div><div class='col card-content'><ul class='list-group list-group-horizontal'>"
     for (var i = 0; i < 5; i++) {
         row += "<li class='list-group-item score'><p>" + gameTitle[i] + "</p>";
         if (isGuest && i < totalGames) {

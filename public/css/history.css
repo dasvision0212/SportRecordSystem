@@ -103,6 +103,14 @@ nav {
 .match-record{
     margin: 10px;
     padding: 0;
+    width: 95%;
+}
+
+.match-record .list-group{
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, 90px);
+    grid-gap: 1em;
+    padding: 0;
 }
 
 .match-record .row{
@@ -121,16 +129,12 @@ nav {
     background-color: #bbbbbb;
 }
 
-.match-record .defeat .card-leading{
-    background-color: #d55539;
+.match-record .defeat .row{
+    border-left: 5px #d55539 solid;
 }
 
-.match-record .victory .card-leading{
-    background-color: #7ebb3a;
-}
-
-.match-record .card-content{
-    padding: 0;
+.match-record .victory .row{
+    border-left: 5px #7ebb3a solid;
 }
 
 .match-record .list-group-item{
@@ -138,27 +142,33 @@ nav {
     border-left: 0 none;
     border-bottom: 0 none;
     border-right: 0 none;
-    padding-left: 18px;
-    padding-right: 18px;
+    padding-left: 15px;
+    padding-right: 15px;
     height: 70px;
 }
 
-.match-record .list-group-item.lineup{
-    border-right: 1px #dddddd solid;
-    height: 60px;
+.match-record .card-content{
+    border-left: 1px #dddddd solid;
+}
+
+.match-record .lineup{
+    height: 100%;
+    width: 130px;
     padding-top: 6px;
     padding-bottom: 6px;
+    padding-right: 18px;
+    padding-left: 6px;
     margin-top: 6px;
     margin-bottom: 6px;
 }
 
-.match-record .list-group-item.lineup p{
+.match-record .lineup p{
     padding-top: 5px;
     text-align: right;
     font-size: 10pt;
 }
 
-.match-record .list-group-item p{
+.match-record p{
     font-size: 8pt;
     color: #999999;
     margin-bottom: 5px;
@@ -174,9 +184,6 @@ nav {
     width: 105px;
 }
 
-.match-record .list-group-item.stats{
-    width: 90px;
-}
 
 .player-table tbody tr:hover{
     cursor:pointer;
@@ -185,8 +192,8 @@ nav {
 
 .tab-content{
     margin-top: 10px;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
     height: 90%;
     overflow-y: auto;
     overflow-x: hidden;
