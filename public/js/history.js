@@ -164,7 +164,7 @@ function renderMatch(match) {
     var row = '';
     row += "<a href='#chart' class='btn match-record'><div class='card " + (isVictory ? "victory" : "defeat") + "'><div class='row'><div class='lineup'>";
     row += "<b> vs. &nbsp " + oppositeTeam + "</b>";
-    row += "<p>" + formatDate(match.date) + "</p></li>";
+    row += "<p>" + formatDate(match.date) + "</p>";
     row += "</div><div class='col card-content'><ul class='list-group list-group-horizontal'>"
     for (var i = 0; i < 5; i++) {
         row += "<li class='list-group-item score'><p>" + gameTitle[i] + "</p>";
@@ -181,7 +181,7 @@ function renderMatch(match) {
             row += "<h3>" + "</h3></li>";
         }
     }
-    row += "</ul></div></div></div></div></a>"
+    row += "</ul></div></div></div></a>"
     $(".matches").append(row);
 }
 
