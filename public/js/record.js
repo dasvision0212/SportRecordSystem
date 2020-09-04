@@ -13,6 +13,7 @@ var p_allyGap=0;
 var p_enemyGap=0;
 var p_videotime=0;
 var p_subtype='';
+var score_team='none'
 var dragArea;
 var subButton=document.getElementById('SubButton');
 var g_playerList_NAME;
@@ -24,7 +25,7 @@ var min=0;
 const plusTxt='得分';
 const minusTxt='失分';
 //時間計算等動態表現
-
+let myTeam;
 var intervalID = setInterval(setTimer, 1000);
 var pause_bt=false;
 //onload, load the playerList in the modal
@@ -33,9 +34,26 @@ window.onload = function() {
     var modal=document.getElementById('mod');
     get('api/team/self')
     .done(function(res) {
+      console.log(res);
+      myTeam = res;
       g_playerList_NAME=new Array(res.players.length);
       g_playerList_NUMBER=new Array(res.players.length);
-      g_gid=res.games[res.games.length-1]._id;
+      let last_game = res.games[res.games.length-1]
+      if(!last_game.confirm){
+        g_gid = last_game._id;
+        $(".lineup").text(last_game.name);
+        get('api/game/'+g_gid+'/m_scores').done(function(res){
+          $('#a-score').text(res[res.length-1]);
+        })
+        get('api/game/'+g_gid+'/g_scores').done(function(res){
+          $('#e-score').text(res[res.length-1]);
+        })
+        $('#a-gap').text(last_game.m_point);
+        $('#e-gap').text(last_game.g_point);
+      }
+      else{
+        $("#newGameButton").trigger('click');
+      }
       for(i = 0; i < res.players.length; i++){
         g_playerList_NAME[i]=res.players[i].name;
         g_playerList_NUMBER[i]=res.players[i].number;
@@ -69,7 +87,47 @@ window.onload = function() {
     z.appendChild(text);
     z.style.backgroundColor='yellow';  
     t.appendChild(z);
+
+    var now = new Date();
+    var month = (now.getMonth() + 1);               
+    var day = now.getDate();
+    if (month < 10) 
+        month = "0" + month;
+    if (day < 10) 
+        day = "0" + day;
+    var today = now.getFullYear() + '-' + month + '-' + day;
+    $('#match-date').val(today);
 };
+$(document).on('click', '#start-new-game', function(){
+  var enemyName = $('#enemy-name').val();
+  var matchDate = $('#match-date').val();
+  var m_point = $('#a-gap').text();
+  var g_point = $('#e-gap').text();
+  console.log(enemyName, matchDate, m_point, g_point);
+  createNewGame(enemyName, matchDate);
+})
+
+$(document).on('click', '#confirmEndGame', function(){
+  post('/api/game/'+g_gid+'/confirm', {});
+  document.location.href = '/history';
+})
+
+function createNewGame(enemyName, matchDate){
+  post('api/team/self/game', {
+    master: myTeam.name,
+    guest: enemyName,
+    date: matchDate,
+    name: myTeam.name + " v.s " + enemyName,
+    m_point: "0",
+    g_point: "0",
+  })
+  .done(function(res){
+    g_gid = res.games[res.games.length-1]._id
+    console.log(res);
+    $(".lineup").text(res.games[res.games.length-1].name);
+    
+  })
+}
 
 function pauseTime(event){
   if (pause_bt) {
@@ -376,26 +434,23 @@ function submit(event){
     var temp =document.getElementById('a-score');
     temp.innerHTML=p_allyScore+1;
     p_allyScore++;
+    score_team='ally'
   }
   else if(event.currentTarget.getAttribute('id')=='SubButton_minus'){
     var temp =document.getElementById('e-score');
     temp.innerHTML=p_enemyScore+1;
     p_enemyScore++;
+    score_team='enemy'
   }
   /*else{
 
   }*/
-  var d=new Date();
   var body = {
-        date: d.getTime(),
         time:p_videotime,
-        quater:1,
         event: p_behavior,
-        sub_type: '1',
         maker: p_maker,
-        relateds: ["5ed1244c2cb776dd1e8f32af"],
-        comment: 'a good shot!!!!!!!!!!!!!!',
-        value: 10,
+        quality: p_quality,
+        score_team: score_team,
         x_loc: Math.floor(p_locationX),
         y_loc: Math.floor(p_locationY),
        
@@ -414,6 +469,7 @@ function submit(event){
   p_playerID=' ';
   p_subtype=' ';
   playerName=' ';
+  score_team='none';
 }
 
 function post(url, body) {
@@ -437,6 +493,7 @@ function get(url, body) {
     })
 }
 
+
 //BUTTON OF CHANGINg score
 function changeScore(event){
   //plus
@@ -444,62 +501,70 @@ function changeScore(event){
     var temp =document.getElementById('a-score');
     var s =parseInt(temp.innerHTML)+1;
     p_allyScore=s;
+    score_team='ally';
     temp.innerHTML=s;
   } 
   else if(event.currentTarget.getAttribute('id')=="p-enemy"){
     var temp =document.getElementById('e-score');
     var s =parseInt(temp.innerHTML)+1;
     p_enemyScore=s;
+    score_team='enemy';
     temp.innerHTML=s;
   }
-  //minus
-  if(parseInt(document.getElementById('a-score').innerHTML)> 0 ){
-    if(event.currentTarget.getAttribute('id')=="m-ally"){
-      var temp =document.getElementById('a-score');
-      var s =parseInt(temp.innerHTML)-1;
-      p_allyScore=s;
-      temp.innerHTML=s;
-    }
+
+  var body = {
+      time:p_videotime,
+      event: "NONE",
+      score_team: score_team,
   }
-  if(parseInt(document.getElementById('e-score').innerHTML)> 0 ){
-    if(event.currentTarget.getAttribute('id')=="m-enemy"){
-      var temp =document.getElementById('e-score');
-      var s =parseInt(temp.innerHTML)-1;
-      p_enemyScore=s;
-      temp.innerHTML=s;
-    }
+  post('/api/game/'+g_gid+'/record',body)
+  .fail(function(error) {
+      console.log(error)      
+  })
+  score_team='none'
+  
+  if(p_allyScore >= 25 && p_allyScore - p_enemyScore >= 2){
+    p_allyScore = 0;
+    p_enemyScore = 0;
+    $('#a-score').text('0');
+    $('#e-score').text('0');
+    $('#p-ally').trigger('click');
+  }
+  if(p_enemyScore >= 25 && p_enemyScore - p_allyScore >= 2){
+    p_allyScore = 0;
+    p_enemyScore = 0;
+    $('#a-score').text('0');
+    $('#e-score').text('0');
+    $('#p-enemy').trigger('click');
   }
 }
 function changeGap(event){
   //plus
-  if(event.currentTarget.getAttribute('id')=="p-ally"){
+  if(event.target.getAttribute('id')=="p-ally"){
     var temp =document.getElementById('a-gap');
     var s =parseInt(temp.innerHTML)+1;
     p_allyGap=s;
     temp.innerHTML=s;
+    let body = {
+      point: s.toString(10)
+    }
+    post('/api/game/'+g_gid+'/m_point', body)
+    .done(function(res){
+      console.log(res);
+    });
   } 
-  else if(event.currentTarget.getAttribute('id')=="p-enemy"){
+  else if(event.target.getAttribute('id')=="p-enemy"){
     var temp =document.getElementById('e-gap');
     var s =parseInt(temp.innerHTML)+1;
     p_enemyGap=s;
     temp.innerHTML=s;
-  }
-  //minus
-  if(parseInt(document.getElementById('a-gap').innerHTML)> 0 ){
-    if(event.currentTarget.getAttribute('id')=="m-ally"){
-      var temp =document.getElementById('a-gap');
-      var s =parseInt(temp.innerHTML)-1;
-      p_allyGap=s;
-      temp.innerHTML=s;
+    let body = {
+      point: s.toString(10)
     }
-  }
-  if(parseInt(document.getElementById('e-gap').innerHTML)> 0 ){
-    if(event.currentTarget.getAttribute('id')=="m-enemy"){
-      var temp =document.getElementById('e-gap');
-      var s =parseInt(temp.innerHTML)-1;
-      p_enemyGap=s;
-      temp.innerHTML=s;
-    }
+    post('/api/game/'+g_gid+'/g_point', body)
+    .done(function(res){
+      console.log(res);
+    });
   }
 }
 
