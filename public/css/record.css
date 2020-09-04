@@ -238,7 +238,7 @@ span{
   overflow:auto;  
 }
 
-/*modal*/
+/* modal
 .modal-dialog{
 	display: flex;
 	width: 50vw;
@@ -261,7 +261,7 @@ span{
 	margin-bottom: 1vh;
 	text-align: center;
 	border: 2.5px solid #3B6273;
-}
+} */
 /*behavior*/
 .beh{
 	width: 7vw;

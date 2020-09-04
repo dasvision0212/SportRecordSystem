@@ -5,6 +5,8 @@ const port = process.env.PORT || 3000;
 const path = require('path');
 const publicDirPath = path.join(__dirname, '../public');
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const Config = require('../config/config');
+var config = new Config();
 var cookieParser = require('cookie-parser')
 app.use(cookieParser())
 
@@ -18,11 +20,9 @@ var corsOptions= {
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
 }
+console.log("Running on environment: ", process.env.NODE_ENV)
+app.use('/api', createProxyMiddleware({ target: config.backend, changeOrigin: true }));
 
-process.env.LOCALTEST = true
-if(process.env.LOCALTEST) {
-    app.use('/api', createProxyMiddleware({ target: 'https://ntuim.cjiso.ninja/', changeOrigin: true }));
-}
 
 // Static Resource
 app.use(express.static(publicDirPath));
