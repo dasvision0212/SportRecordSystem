@@ -146,9 +146,14 @@ function fetchMatchRecord() {
         confirm: true,
         records: []
     };
-    matches = [temp, temp, temp, temp, temp, temp];
+    matches = myTeam.games.reverse();
 
-    matches.map((match) => { getMatchPoints(match); renderMatch(match); });
+    matches.map((match) => {
+         getMatchPoints(match)
+         .done(function(res){
+            renderMatch(match);
+        });
+    });
 
 }
 
@@ -169,45 +174,36 @@ function renderMatch(match) {
     for (var i = 0; i < 5; i++) {
         row += "<li class='list-group-item score'><p>" + gameTitle[i] + "</p>";
         if (isGuest && i < totalGames) {
-            row += "<h3>" + match.g_game_point[i].toString() + " : " + match.m_game_point[i].toString() + "</h3></li>"
+            row += "<h3>" + match.g_scores[i] + " : " + match.m_scores[i] + "</h3></li>"
         }
         else if (!isGuest && i < totalGames) {
-            row += "<h3>" + match.m_game_point[i].toString() + " : " + match.g_game_point[i].toString() + "</h3></li>"
+            row += "<h3>" + match.m_scores[i] + " : " + match.g_scores[i] + "</h3></li>"
         }
     }
-    for (var i = 0; i < 5; i++) {
-        row += "<li class='list-group-item stats'><p>" + mainStatsTitle[i] + "</p>"
-        if (i == 0) {
-            row += "<h3>" + "</h3></li>";
-        }
+    for (var i = 0; i < match.mainStats.length; i++) {
+        row += "<li class='list-group-item stats'><p>" + match.mainStats[i].title + "</p>"
+        row += "<h3>" + match.mainStats[i].value + "</h3></li>";
     }
     row += "</ul></div></div></div></a>"
     $(".matches").append(row);
 }
 
 function getMatchPoints(match) {
-    match['g_game_point'] = getEachGamePoints(match['records'], team = 'guest');
-    match['m_game_point'] = getEachGamePoints(match['records'], team = 'master');
+    var g = get('/api/game/'+match._id+'/g_scores').done(function(res){
+        match['g_scores'] = res;
+    });
+    var m = get('/api/game/'+match._id+'/m_scores').done(function(res){
+        match['m_scores'] = res;
+    });
 
-    return match;
+    return $.when(g, m);
 }
 
-function getEachGamePoints(records, team) {
-    if (team == 'guest') { //temp
-        return [18, 18, 26, 19];
-    }
-    if (team == 'master') { //temp
-        return [25, 25, 24, 25];
-    }
-}
 
-function formatDate(date) {
-    var mm = date.getMonth() + 1;
-    var dd = date.getDate();
-    return [date.getFullYear(),
-    (mm > 9 ? '' : '0') + mm,
-    (dd > 9 ? '' : '0') + dd
-    ].join('/');
+function formatDate(datetime) { // yyyy-mm-ddThh:mm:ss.fffZ
+    var date = datetime.substr(0,10);
+    date = date.replace(/-/g, '/');
+    return date;
 };
 
 function formatRate(rate) {
@@ -392,4 +388,25 @@ function getBlockTimes(records) {
 
 function getAvgBlockTimesPerGame(records) {
     return 0;
+}
+
+function post(url, body) {
+    return $.ajax({
+        url: url,
+        headers: {
+        },
+        method: 'POST',
+        data: body,
+        timeout: 0
+    })
+}
+
+function get(url, body) {
+    return $.ajax({
+        url: url,
+        headers: {
+        },
+        method: 'GET',
+        timeout: 0
+    })
 }
