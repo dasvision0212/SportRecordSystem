@@ -335,8 +335,8 @@ function getServeErrorRate(records) {
 }
 
 function getReceiveErrorRate(records) {
-    var error_count = records.filter((rec) => rec.event == "DIG" && rec.value <= 60).length;
-    var receive_count = records.filter((rec) => rec.event == "DIG").length;
+    var error_count = records.filter((rec) => rec.event == "RCV" && rec.value <= 60).length;
+    var receive_count = records.filter((rec) => rec.event == "RCV").length;
     if (receive_count == 0) {
         return 0.0;
     }
@@ -379,7 +379,7 @@ function getAvgAttackTimesPerGame(records) {
 }
 
 function getReceiveTimes(records) {
-    return records.filter((rec) => rec.event == "DIG").length;
+    return records.filter((rec) => rec.event == "RCV").length;
 }
 
 function getAvgReceiveTimesPerGame(records) {
