@@ -44,12 +44,16 @@ window.onload = function() {
         $(".lineup").text(last_game.name);
         get('api/game/'+g_gid+'/m_scores').done(function(res){
           $('#a-score').text(res[res.length-1]);
+          p_allyScore = parseInt(res[res.length-1], 10);
         })
         get('api/game/'+g_gid+'/g_scores').done(function(res){
           $('#e-score').text(res[res.length-1]);
+          p_enemyScore = parseInt(res[res.length-1], 10);
         })
         $('#a-gap').text(last_game.m_point);
+        p_allyGap = parseInt(last_game.m_point, 10);
         $('#e-gap').text(last_game.g_point);
+        p_enemyGap = parseInt(last_game.g_point, 10);
       }
       else{
         $("#newGameButton").trigger('click');
