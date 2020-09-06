@@ -399,10 +399,10 @@ function submit(event){
     }*/
   }
   if(p_quality=='B'){
-    p_quality=80;
+    p_quality=50;
   }
   if(p_quality=='C'){
-    p_quality=60;
+    p_quality=0;
     /*if(p_playerID=='87'){
       var temp =document.getElementById('a-score');
       temp.innerHTML=p_allyScore+1;
