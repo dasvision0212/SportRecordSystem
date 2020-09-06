@@ -158,6 +158,8 @@ function fetchMatchRecord() {
 }
 
 function renderMatch(match) {
+    if(!match.confirm)
+        return;
     var gameTitle = ['第一局', '第二局', '第三局', '第四局', '第五局'];
     var mainStatsTitle = ['攻擊得分', '攔網得分', 'Ace', '失誤得分', '一傳失誤率'];
 
