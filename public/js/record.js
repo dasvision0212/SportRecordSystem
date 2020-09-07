@@ -420,7 +420,7 @@ function submit(event){
 
   }
   if (p_quality=='D') {
-    p_quality=0;
+    p_quality=25;
     /*if(p_playerID=='87'){
       var temp =document.getElementById('a-score');
       temp.innerHTML=p_allyScore+1;
