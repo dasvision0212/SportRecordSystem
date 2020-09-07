@@ -1,6 +1,6 @@
 let myTeam;
 
-let mainStatsTitle = {
+let playerMainStatsTitle = {
     serve_error_rate: '發失率',
     receive_error_rate: '接失率',
     attack_error_rate: '攻失率',
@@ -8,7 +8,128 @@ let mainStatsTitle = {
     block_score_rate: '攔網率',
 };
 
-let detailedStatsTitle = [
+let matchMainStatsTitle = {
+    atk: {
+        title: '攻擊次數',
+        subStats: {
+            perfect_atk: {
+                title: '強攻',
+                subStats: {
+                    perfect_atk_score: '得分',
+                    perfect_atk_lose: '失分',
+                    perfect_atk_normal_set: '正舉次數',
+                    perfect_atk_bad_set: '失舉次數'
+                }
+            },
+            normal_atk: {
+                title: '普攻',
+                subStats: {
+                    normal_atk_score: '得分',
+                    normal_atk_lose: '失分',
+                    normal_atk_normal_set: '正舉次數',
+                    normal_atk_bad_set: '失舉次數'
+                }
+            },
+            bad_atk: {
+                title: '虛攻',
+                subStats: {
+                    bad_atk_score: '得分',
+                    bad_atk_lose: '失分',
+                    bad_atk_normal_set: '正舉次數',
+                    bad_atk_bad_set: '失舉次數'
+                }
+            },
+            special_atk: {
+                title: '佯攻',
+                subStats: {
+                    special_atk_score: '得分',
+                    special_atk_lose: '失分',
+                    special_atk_normal_set: '正舉次數',
+                    special_atk_bad_set: '失舉次數'
+                }
+            }
+        }
+    },
+    block: {
+        title: '攔網次數',
+        subStats: {
+            perfect_block:{
+                title: '攔滿',
+                subStats: {
+                    perfect_block_score: '得分',
+                    perfect_block_lose: '失分'
+                }
+            },
+            normal_block:{
+                title: '被閃躲',
+                subStats: {
+                    normal_block_perfect_atk: '敵方強攻',
+                    normal_block_special_atk: '敵方佯攻'
+                }
+            },
+            bad_block:{
+                title: '攔穿',
+                subStats: {
+
+                }
+            }
+        }
+    },
+    serve: {
+        title: '發球次數',
+        subStats: {
+            perfect_serve:{
+                title: '爆擊發球',
+                subStats: {
+                    perfect_serve_score: '得分',
+                    perfect_serve_enemy_error: '干擾'
+                }
+            },
+            normal_serve:{
+                title: '一般發球',
+                subStats: {
+                    normal_serve_score: '得分',
+                    normal_serve_enemy_error: '干擾'
+                }
+            },
+            bad_serve: {
+                title: '發球失誤',
+                subStats: {
+                    bad_serve_net: '掛網',
+                    bad_serve_outside: '出界'
+                }
+            }
+        }
+    },
+    receive: {
+        title: '接球次數',
+        subStats: {
+            perfect_receive: {
+                title: '嗆司',
+                subStats: {
+                    perfect_receive_normal_set: '舉正',
+                    perfect_receive_bad_set: '失舉'
+                }
+            },
+            normal_receive: {
+                title: '一般接球',
+                subStats: {
+                    normal_receive_normal_set: '舉正',
+                    normal_receive_bad_set: '失舉'
+                }
+            },
+            bad_receive: {
+                title: '接噴',
+                subStats: {
+                    bad_receive_lose: '失分',
+                    bad_receive_cover: '修正'
+                }
+            }
+        }
+    }
+}
+
+let playerDetailedMainStatsTitle = [
     {
         title: '基本資料',
         objects: {
@@ -42,7 +163,8 @@ $.ajax({
         myTeam = res;
         fetchMatchRecord();
         fetchPlayerList();
-        initPlayerInfo();
+        // initPlayerInfo();
+        initMatchInfo();
     })
     .fail(function (error) {
         console.log(error);
@@ -161,7 +283,6 @@ function renderMatch(match) {
     if(!match.confirm)
         return;
     var gameTitle = ['第一局', '第二局', '第三局', '第四局', '第五局'];
-    var mainStatsTitle = ['攻擊得分', '攔網得分', 'Ace', '失誤得分', '一傳失誤率'];
 
     var ownedTeam = '台大資管'; //temp
     var oppositeTeam = (match.guest == ownedTeam) ? match.master : match.guest;
@@ -169,7 +290,7 @@ function renderMatch(match) {
     var isVictory = isGuest ? (match.g_point > match.m_point) : (match.g_point < match.m_point);
     var totalGames = match.g_point + match.m_point;
     var row = '';
-    row += "<a href='#chart' class='btn match-record'><div class='card " + (isVictory ? "victory" : "defeat") + "'><div class='row'><div class='lineup'>";
+    row += "<a href='#chart' class='btn match-record' id='" + match._id + "'><div class='card " + (isVictory ? "victory" : "defeat") + "'><div class='row'><div class='lineup'>";
     row += "<b> vs. &nbsp " + oppositeTeam + "</b>";
     row += "<p>" + formatDate(match.date) + "</p>";
     row += "</div><div class='col card-content'><ul class='list-group list-group-horizontal'>"
@@ -188,6 +309,9 @@ function renderMatch(match) {
     }
     row += "</ul></div></div></div></a>"
     $(".matches").append(row);
+    $(".match-record").on('click', function(){
+        renderMatchInfoById($(this).attr("id"));
+    })
 }
 
 function getMatchPoints(match) {
@@ -230,8 +354,8 @@ function fetchPlayerList() {
 
 function renderTableHead() {
     var head = "<tr><th scope=\"col\">選手</th>"
-    Object.keys(mainStatsTitle).forEach(function (key) {
-        title = mainStatsTitle[key];
+    Object.keys(playerMainStatsTitle).forEach(function (key) {
+        title = playerMainStatsTitle[key];
         head += "<th scope=\"col\">" + title + "</th>";
     });
     head += "</tr>"
@@ -242,7 +366,7 @@ function renderPlayerRow(player) {
     var row = ""
     row += "<tr onclick=\"window.location='#chart';\" class=\"player-row\" id=\"" + player._id + "\"><th scope='row'>" + player.name + "</th>";
 
-    Object.keys(mainStatsTitle).forEach(function (key) {
+    Object.keys(playerMainStatsTitle).forEach(function (key) {
         row += "<td>" + formatRate(player[key]) + "</td>";
     });
     row += "</tr>";
@@ -285,6 +409,34 @@ function getPlayerDetailedStats(player) {
     player['avg_block_times_per_game'] = getAvgBlockTimesPerGame(player['records']);
 }
 
+function renderMatchInfoById(gid){
+    var game = myTeam.games.find((game) => game._id == gid);
+    $(".plot-info #name").contents().filter(function () {
+        return this.nodeType == 3;
+    })[0].nodeValue = game.name
+    $(".plot-info #pos").html(formatDate(game.date));
+
+    var row = ""
+    Object.keys(matchMainStatsTitle).forEach(function (field) {
+        get('/api/game/'+gid+'/records?cond='+ field)
+        .done(function(res){
+            $(".plot-info #" + field).html(res.count.toString(10));
+        })
+        Object.keys(matchMainStatsTitle[field].subStats).forEach(function(stat){
+            get('/api/game/'+gid+'/records?cond='+ stat)
+            .done(function(res){
+                $(".plot-info #" + stat).html(res.count.toString(10));
+            })
+            Object.keys(matchMainStatsTitle[field].subStats[stat].subStats).forEach(function(subStat){
+                get('/api/game/'+gid+'/records?cond='+ subStat)
+                .done(function(res){
+                    $(".plot-info #" + stat+'_'+subStat).html(res.count.toString(10));
+                })
+            })
+        })
+    });
+}
+
 function renderPlayerInfoById(pid) {
     // find player by playerName
     var player = myTeam.players.find((player) => player._id == pid);
@@ -294,32 +446,71 @@ function renderPlayerInfoById(pid) {
     $(".plot-info #pos").html(player.position);
 
     var row = ""
-    Object.keys(mainStatsTitle).forEach(function (key) {
+    Object.keys(playerMainStatsTitle).forEach(function (key) {
         $(".plot-info #" + key).html(formatRate(player[key]));
     });
 
-    detailedStatsTitle.map(field => {
+    playerDetailedMainStatsTitle.map(field => {
         Object.keys(field.objects).forEach(key => {
             $(".plot-info #" + key).html((player[key]));
         })
     })
 }
 
+function initMatchInfo() {
+    $(".plot-info .info-overview ul").empty();
+    Object.keys(matchMainStatsTitle).forEach(function (key) {
+        var row = ""
+        row += "<li class=\"list-group-item\" id=\"" + key + '-title' + "\"><span id=\"" + key + "\"> </span>" + matchMainStatsTitle[key].title + "</li>";
+        $(".plot-info .info-overview ul").append(row);
+        $("#"+key+"-title").hover(function(){
+            $(this).attr('style', 'background-color: #f0f0f0');
+        },function(){
+            $(this).attr('style', '');
+        })
+    });
+
+
+    $(".plot-info .info-detailed").empty();
+    Object.keys(matchMainStatsTitle).forEach(field => {
+        var row = ""
+        row += '<table class="table" id="'+ field +'-table" style="display: none;"><caption>'+matchMainStatsTitle[field].title+"</caption><tbody>"
+        let stats = matchMainStatsTitle[field].subStats;
+        Object.keys(matchMainStatsTitle[field].subStats).forEach(key => {
+            row += "<tr class=\"section-head\"><th scope=\"row\" colspan=\"1\">" + stats[key].title + "</th><th id=\"" + key + "\"> </th></tr>";
+            Object.keys(stats[key].subStats).forEach(subKey => {
+                row += "<tr><th scope=\"row\">" + stats[key].subStats[subKey] + "</th><td id=\"" + key+'_'+subKey + "\"> </td></tr>"
+            })
+        });
+        row += '</tbody></table>'
+        $(".plot-info .info-detailed").append(row);
+    })
+    
+    Object.keys(matchMainStatsTitle).forEach(function (key) {
+        $('#'+key+'-title').on('click', function(){
+            $('.plot-info table').attr('style', 'display: none');
+            $('.plot-info #'+key+'-table').attr('style', '');
+        })
+    });
+}
+
 function initPlayerInfo() {
+    $(".plot-info .info-overview ul").empty();
     var row = ""
-    Object.keys(mainStatsTitle).forEach(function (key) {
-        row += "<li class=\"list-group-item\"><span id=\"" + key + "\"> </span>" + mainStatsTitle[key] + "</li>";
+    Object.keys(playerMainStatsTitle).forEach(function (key) {
+        row += "<li class=\"list-group-item\"><span id=\"" + key + "\"> </span>" + playerMainStatsTitle[key] + "</li>";
     });
     $(".plot-info .info-overview ul").append(row);
 
+
+    $(".plot-info .info-detailed tbody").empty();
     var row = ""
-    detailedStatsTitle.map(field => {
+    playerDetailedMainStatsTitle.map(field => {
         row += "<tr class=\"section-head\"><th scope=\"row\" colspan=\"2\">" + field.title + "</th></tr>";
         Object.keys(field.objects).forEach(key => {
             row += "<tr><th scope=\"row\">" + field.objects[key] + "</th><td id=\"" + key + "\"> </td></tr>"
         })
     })
-
     $(".plot-info .info-detailed tbody").append(row);
 }
 
