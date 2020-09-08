@@ -8,7 +8,7 @@ let playerMainStatsTitle = {
     block_score_rate: '攔網率',
 };
 
-let matchMainStatsTitle = {
+let matchDetailedStatsTitle = {
     atk: {
         title: '攻擊次數',
         subStats: {
@@ -310,6 +310,7 @@ function renderMatch(match) {
     row += "</ul></div></div></div></a>"
     $(".matches").append(row);
     $(".match-record").on('click', function(){
+        initMatchInfo();
         renderMatchInfoById($(this).attr("id"));
     })
 }
@@ -417,17 +418,17 @@ function renderMatchInfoById(gid){
     $(".plot-info #pos").html(formatDate(game.date));
 
     var row = ""
-    Object.keys(matchMainStatsTitle).forEach(function (field) {
+    Object.keys(matchDetailedStatsTitle).forEach(function (field) {
         get('/api/game/'+gid+'/records?cond='+ field)
         .done(function(res){
             $(".plot-info #" + field).html(res.count.toString(10));
         })
-        Object.keys(matchMainStatsTitle[field].subStats).forEach(function(stat){
+        Object.keys(matchDetailedStatsTitle[field].subStats).forEach(function(stat){
             get('/api/game/'+gid+'/records?cond='+ stat)
             .done(function(res){
                 $(".plot-info #" + stat).html(res.count.toString(10));
             })
-            Object.keys(matchMainStatsTitle[field].subStats[stat].subStats).forEach(function(subStat){
+            Object.keys(matchDetailedStatsTitle[field].subStats[stat].subStats).forEach(function(subStat){
                 get('/api/game/'+gid+'/records?cond='+ subStat)
                 .done(function(res){
                     $(".plot-info #" + stat+'_'+subStat).html(res.count.toString(10));
@@ -459,9 +460,9 @@ function renderPlayerInfoById(pid) {
 
 function initMatchInfo() {
     $(".plot-info .info-overview ul").empty();
-    Object.keys(matchMainStatsTitle).forEach(function (key) {
+    Object.keys(matchDetailedStatsTitle).forEach(function (key) {
         var row = ""
-        row += "<li class=\"list-group-item\" id=\"" + key + '-title' + "\"><span id=\"" + key + "\"> </span>" + matchMainStatsTitle[key].title + "</li>";
+        row += "<li class=\"list-group-item\" id=\"" + key + '-title' + "\"><span id=\"" + key + "\"> </span>" + matchDetailedStatsTitle[key].title + "</li>";
         $(".plot-info .info-overview ul").append(row);
         $("#"+key+"-title").hover(function(){
             $(this).attr('style', 'background-color: #f0f0f0');
@@ -472,11 +473,11 @@ function initMatchInfo() {
 
 
     $(".plot-info .info-detailed").empty();
-    Object.keys(matchMainStatsTitle).forEach(field => {
+    Object.keys(matchDetailedStatsTitle).forEach(field => {
         var row = ""
-        row += '<table class="table" id="'+ field +'-table" style="display: none;"><caption>'+matchMainStatsTitle[field].title+"</caption><tbody>"
-        let stats = matchMainStatsTitle[field].subStats;
-        Object.keys(matchMainStatsTitle[field].subStats).forEach(key => {
+        row += '<table class="table" id="'+ field +'-table" style="display: none;"><caption>'+matchDetailedStatsTitle[field].title+"</caption><tbody>"
+        let stats = matchDetailedStatsTitle[field].subStats;
+        Object.keys(matchDetailedStatsTitle[field].subStats).forEach(key => {
             row += "<tr class=\"section-head\"><th scope=\"row\" colspan=\"1\">" + stats[key].title + "</th><th id=\"" + key + "\"> </th></tr>";
             Object.keys(stats[key].subStats).forEach(subKey => {
                 row += "<tr><th scope=\"row\">" + stats[key].subStats[subKey] + "</th><td id=\"" + key+'_'+subKey + "\"> </td></tr>"
@@ -486,7 +487,7 @@ function initMatchInfo() {
         $(".plot-info .info-detailed").append(row);
     })
     
-    Object.keys(matchMainStatsTitle).forEach(function (key) {
+    Object.keys(matchDetailedStatsTitle).forEach(function (key) {
         $('#'+key+'-title').on('click', function(){
             $('.plot-info table').attr('style', 'display: none');
             $('.plot-info #'+key+'-table').attr('style', '');
