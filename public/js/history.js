@@ -129,6 +129,148 @@ let matchDetailedStatsTitle = {
     }
 }
 
+let playerDetailedStatsTitle = {
+    atk: {
+        title: '攻擊次數',
+        subStats: {
+            perfect_atk: {
+                title: '強攻',
+                subStats: {
+                    perfect_atk_score: '得分',
+                    perfect_atk_lose: '失分',
+                    perfect_atk_normal_set: '正舉次數',
+                    perfect_atk_bad_set: '失舉次數'
+                }
+            },
+            normal_atk: {
+                title: '普攻',
+                subStats: {
+                    normal_atk_score: '得分',
+                    normal_atk_lose: '失分',
+                    normal_atk_normal_set: '正舉次數',
+                    normal_atk_bad_set: '失舉次數'
+                }
+            },
+            bad_atk: {
+                title: '虛攻',
+                subStats: {
+                    bad_atk_score: '得分',
+                    bad_atk_lose: '失分',
+                    bad_atk_normal_set: '正舉次數',
+                    bad_atk_bad_set: '失舉次數'
+                }
+            },
+            special_atk: {
+                title: '佯攻',
+                subStats: {
+                    special_atk_score: '得分',
+                    special_atk_lose: '失分',
+                    special_atk_normal_set: '正舉次數',
+                    special_atk_bad_set: '失舉次數'
+                }
+            }
+        }
+    },
+    block: {
+        title: '攔網次數',
+        subStats: {
+            perfect_block:{
+                title: '攔滿',
+                subStats: {
+                    perfect_block_score: '得分',
+                    perfect_block_lose: '失分'
+                }
+            },
+            normal_block:{
+                title: '被閃躲',
+                subStats: {
+                    normal_block_perfect_atk: '敵方強攻',
+                    normal_block_special_atk: '敵方佯攻'
+                }
+            },
+            bad_block:{
+                title: '攔穿',
+                subStats: {
+
+                }
+            }
+        }
+    },
+    serve: {
+        title: '發球次數',
+        subStats: {
+            perfect_serve:{
+                title: '爆擊發球',
+                subStats: {
+                    perfect_serve_score: '得分',
+                    perfect_serve_enemy_error: '干擾'
+                }
+            },
+            normal_serve:{
+                title: '一般發球',
+                subStats: {
+                    normal_serve_score: '得分',
+                    normal_serve_enemy_error: '干擾'
+                }
+            },
+            bad_serve: {
+                title: '發球失誤',
+                subStats: {
+                    bad_serve_net: '掛網',
+                    bad_serve_outside: '出界'
+                }
+            }
+        }
+    },
+    receive: {
+        title: '接球次數',
+        subStats: {
+            perfect_receive: {
+                title: '嗆司',
+                subStats: {
+                    perfect_receive_normal_set: '舉正',
+                    perfect_receive_bad_set: '失舉'
+                }
+            },
+            normal_receive: {
+                title: '一般接球',
+                subStats: {
+                    normal_receive_normal_set: '舉正',
+                    normal_receive_bad_set: '失舉'
+                }
+            },
+            bad_receive: {
+                title: '接噴',
+                subStats: {
+                    bad_receive_lose: '失分',
+                    bad_receive_cover: '修正'
+                }
+            }
+        }
+    },
+    set: {
+        title: '舉球次數',
+        subStats: {
+            normal_set: {
+                title: '舉正',
+                subStats: {
+                    normal_set_perfect_atk: '舉正後強攻',
+                    normal_set_normal_atk: '舉正後普攻',
+                    normal_set_bad_atk: '舉正後虛攻'
+                }
+            },
+            bad_set: {
+                title: '失舉',
+                subStats: {
+                    bad_set_perfect_atk: '失舉後強攻',
+                    bad_set_normal_atk: '失舉後普攻',
+                    bad_set_bad_atk: '失舉後虛攻'
+                }
+            }
+        }
+    }
+}
+
 let playerDetailedMainStatsTitle = [
     {
         title: '基本資料',
@@ -373,6 +515,7 @@ function renderPlayerRow(player) {
     row += "</tr>";
     $(".tab-content .player-table").append(row);
     $('.player-row').on('click', function () {
+        initPlayerInfo();
         renderPlayerInfoById($(this).attr("id"));
     })
 }
@@ -447,15 +590,24 @@ function renderPlayerInfoById(pid) {
     $(".plot-info #pos").html(player.position);
 
     var row = ""
-    Object.keys(playerMainStatsTitle).forEach(function (key) {
-        $(".plot-info #" + key).html(formatRate(player[key]));
-    });
-
-    playerDetailedMainStatsTitle.map(field => {
-        Object.keys(field.objects).forEach(key => {
-            $(".plot-info #" + key).html((player[key]));
+    Object.keys(playerDetailedStatsTitle).forEach(function (field) {
+        get('/api/player/'+pid+'/records?cond='+ field)
+        .done(function(res){
+            $(".plot-info #" + field).html(res.count.toString(10));
         })
-    })
+        Object.keys(playerDetailedStatsTitle[field].subStats).forEach(function(stat){
+            get('/api/player/'+pid+'/records?cond='+ stat)
+            .done(function(res){
+                $(".plot-info #" + stat).html(res.count.toString(10));
+            })
+            Object.keys(playerDetailedStatsTitle[field].subStats[stat].subStats).forEach(function(subStat){
+                get('/api/player/'+pid+'/records?cond='+ subStat)
+                .done(function(res){
+                    $(".plot-info #" + stat+'_'+subStat).html(res.count.toString(10));
+                })
+            })
+        })
+    });
 }
 
 function initMatchInfo() {
@@ -497,22 +649,39 @@ function initMatchInfo() {
 
 function initPlayerInfo() {
     $(".plot-info .info-overview ul").empty();
-    var row = ""
-    Object.keys(playerMainStatsTitle).forEach(function (key) {
-        row += "<li class=\"list-group-item\"><span id=\"" + key + "\"> </span>" + playerMainStatsTitle[key] + "</li>";
-    });
-    $(".plot-info .info-overview ul").append(row);
-
-
-    $(".plot-info .info-detailed tbody").empty();
-    var row = ""
-    playerDetailedMainStatsTitle.map(field => {
-        row += "<tr class=\"section-head\"><th scope=\"row\" colspan=\"2\">" + field.title + "</th></tr>";
-        Object.keys(field.objects).forEach(key => {
-            row += "<tr><th scope=\"row\">" + field.objects[key] + "</th><td id=\"" + key + "\"> </td></tr>"
+    Object.keys(playerDetailedStatsTitle).forEach(function (key) {
+        var row = ""
+        row += "<li class=\"list-group-item\" id=\"" + key + '-title' + "\"><span id=\"" + key + "\"> </span>" + playerDetailedStatsTitle[key].title + "</li>";
+        $(".plot-info .info-overview ul").append(row);
+        $("#"+key+"-title").hover(function(){
+            $(this).attr('style', 'background-color: #f0f0f0');
+        },function(){
+            $(this).attr('style', '');
         })
+    });
+
+
+    $(".plot-info .info-detailed").empty();
+    Object.keys(playerDetailedStatsTitle).forEach(field => {
+        var row = ""
+        row += '<table class="table" id="'+ field +'-table" style="display: none;"><caption>'+playerDetailedStatsTitle[field].title+"</caption><tbody>"
+        let stats = playerDetailedStatsTitle[field].subStats;
+        Object.keys(playerDetailedStatsTitle[field].subStats).forEach(key => {
+            row += "<tr class=\"section-head\"><th scope=\"row\" colspan=\"1\">" + stats[key].title + "</th><th id=\"" + key + "\"> </th></tr>";
+            Object.keys(stats[key].subStats).forEach(subKey => {
+                row += "<tr><th scope=\"row\">" + stats[key].subStats[subKey] + "</th><td id=\"" + key+'_'+subKey + "\"> </td></tr>"
+            })
+        });
+        row += '</tbody></table>'
+        $(".plot-info .info-detailed").append(row);
     })
-    $(".plot-info .info-detailed tbody").append(row);
+    
+    Object.keys(playerDetailedStatsTitle).forEach(function (key) {
+        $('#'+key+'-title').on('click', function(){
+            $('.plot-info table').attr('style', 'display: none');
+            $('.plot-info #'+key+'-table').attr('style', '');
+        })
+    });
 }
 
 function getServeErrorRate(records) {
