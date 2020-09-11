@@ -398,18 +398,6 @@ function drawDot(ctx, x, y, size = 5) {
 
 function fetchMatchRecord() {
     // request match records
-    var temp = { //temp
-        date: new Date('June 6, 2020 03:24:00'),
-        championship: "台大盃",
-        guest: "合大資管",
-        master: "台大資管",
-        g_players: [],
-        m_players: [],
-        g_point: 1,
-        m_point: 3,
-        confirm: true,
-        records: []
-    };
     matches = myTeam.games.reverse();
 
     matches.map((match) => {
