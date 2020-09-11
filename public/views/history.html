@@ -46,65 +46,32 @@
     <!-- Connect -->
     <div class="history">
         <div class="info row">
-            <h1 class="col">台大資管男子排球隊</h1>
-            <ul class="col list-group list-group-horizontal">
-                <li class="list-group-item rounded-0">
-                    <p>勝場</p>
-                    <h3>15</h3>
-                </li>
-                <li class="list-group-item rounded-0">
-                    <p>敗場</p>
-                    <h3>5</h3>
-                </li>
-                <li class="list-group-item rounded-0">
+            <h1 class="col team-name"></h1>
+            <ul class="col list-group list-group-horizontal win-lose">
+                <li class="list-group-item rounded-0" id="win-rate">
                     <p>勝率</p>
-                    <h3>0.750</h3>
+                    <h3>0</h3>
+                </li>
+                <li class="list-group-item rounded-0" id="loses">
+                    <p>敗場</p>
+                    <h3>0</h3>
+                </li>
+                <li class="list-group-item rounded-0" id="wins">
+                    <p>勝場</p>
+                    <h3>0</h3>
                 </li>
             </ul>
         </div>
         <ul class="nav nav-tabs nav-justified">
             <li class="nav-item">
-                <a class="nav-link active" role="tab" data-toggle="tab" href="#overview">總覽</a>
+                <a class="nav-link active" role="tab" data-toggle="tab" href="#history-match">對戰紀錄</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" role="tab" data-toggle="tab" href="#players-stats">選手數據</a>
             </li>
         </ul>
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="overview">
-                <div class="stat-cards">
-                    <div class="row">
-                        <div class="col card">
-                            <div class="card-header"><span><h1>95%</h1></span></div>
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                            </div>
-                        </div>
-                        <div class="col card">
-                            <div class="card-header"><span><h1>95%</h1></span></div>
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                            </div>
-                        </div>
-                        <div class="col card">
-                            <div class="card-header"><span><h1>95%</h1></span></div>
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="history-match">
+            <div role="tabpanel" class="tab-pane active" id="history-match">
                 <div class="matches">
                 </div>
             </div>
@@ -136,21 +103,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3 plot">
-                <div class="row dropdown plot-list">
-                    <button class="btn btn-secondary btn-lg dropdown-toggle displayed" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      發球落點圖
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button class="dropdown-item" type="button" id="serve">發球落點圖</button>
-                        <button class="dropdown-item" type="button" id="attack">攻擊出手點圖</button>
-                        <button class="dropdown-item" type="button" id="receive">一傳落點圖</button>
-                        <button class="dropdown-item" type="button" id="set">二傳落點圖</button>
-                    </div>
-                </div>
-                <div class="plot-body" style="position: relative;">
-                    <img id="volleyball_court" src="img/volleyball_court.png" style="position: absolute; top: 0; left: 0; width: 25vw;" alt="">
-                    <canvas class="plot-canvas" id="hotspot-plot" style="position: absolute; top: 0; left: 0;">
+            <div class="col-4 plot">
+                <div class="plot-body" style="position: relative; max-height: 100%;">
+                    <img id="volleyball_court" src="img/volleyball_court.png" style="position: absolute; top: 0; left: 0; max-width: 90%; margin-top: 20px;" alt="">
+                    <canvas class="plot-canvas" id="hotspot-plot" style="position: absolute; top: 0; left: 0; margin-top: 20px;">
                     </canvas>
                 </div>
             </div>

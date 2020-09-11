@@ -303,6 +303,16 @@ $.ajax({
 })
     .done(function (res) {
         myTeam = res;
+        console.log(res);
+        $(".team-name").html(res.name);
+        $("#wins h3").html(res.win);
+        $("#loses h3").html(res.lose);
+        if(parseInt(res.win, 10) + parseInt(res.lose, 10) != 0){
+            $("#win-rate h3").html((parseInt(res.win, 10) / (parseInt(res.win, 10) + parseInt(res.lose, 10))).toPrecision(3));
+        }
+        else{
+            $("#win-rate h3").html(0);
+        }
         fetchMatchRecord();
         fetchPlayerList();
         // initPlayerInfo();
@@ -314,7 +324,7 @@ $.ajax({
 
 $(document).ready(() => { resizeCanvas(); drawPlot('serve', {}); });
 
-$(window).resize(resizeCanvas());
+$(window).resize(resizeCanvas);
 
 $('.plot-list .dropdown-item').on('click', function () {
     var type = $(this).attr('id');
@@ -363,35 +373,32 @@ function resizeCanvas() {
     $.each($('.plot-body').children('.plot-canvas'), function () {
         $(this)[0].getContext("2d").canvas.width = imgWidth;
     });
+    let canvas = document.getElementById("hotspot-plot");
+    let ctx = canvas.getContext("2d");
+    var h = ctx.canvas.height;
+    var w = ctx.canvas.width;
+    console.log('resize:', h, w);
 }
 
-function drawPlot(type, query) {
+function drawPlot(records) {
     let canvas = document.getElementById("hotspot-plot");
     let ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // get 'type' datas and draw it
-    if (type == 'serve') {
-        drawDot(ctx, 100, 100)
-        drawDot(ctx, 150, 120)
-        drawDot(ctx, 130, 200)
-        drawDot(ctx, 140, 300)
-    }
-    else {
-        drawDot(ctx, 500, 700)
-        drawDot(ctx, 750, 920)
-        drawDot(ctx, 330, 500)
-        drawDot(ctx, 740, 1300)
+    for(var i in records){
+        drawDot(ctx, records[i].x_loc, records[i].y_loc);
     }
 }
 
 function drawDot(ctx, x, y, size = 5) {
     var h = ctx.canvas.height;
     var w = ctx.canvas.width;
+    console.log(h, w);
     ctx.beginPath();
     ctx.lineWidth = 3;
     ctx.strokeStyle = "#000000";
     ctx.fillStyle = "#000000";
-    ctx.arc(x / 900 * w, y / 1800 * h, size / 1000 * w, 0, Math.PI * 2);
+    ctx.arc(x * w, y * h, size / 1000 * w, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 }
@@ -414,22 +421,24 @@ function renderMatch(match) {
         return;
     var gameTitle = ['第一局', '第二局', '第三局', '第四局', '第五局'];
 
-    var ownedTeam = '台大資管'; //temp
-    var oppositeTeam = (match.guest == ownedTeam) ? match.master : match.guest;
-    var isGuest = (match.guest == ownedTeam);
-    var isVictory = isGuest ? (match.g_point > match.m_point) : (match.g_point < match.m_point);
+    var ownedTeam = match.master; //temp
+    var oppositeTeam = match.guest;
+    var isVictory = match.g_point < match.m_point;
     var totalGames = match.g_point + match.m_point;
     var row = '';
-    row += "<a href='#chart' class='btn match-record' id='" + match._id + "'><div class='card " + (isVictory ? "victory" : "defeat") + "'><div class='row'><div class='lineup'>";
-    row += "<b> vs. &nbsp " + oppositeTeam + "</b>";
-    row += "<p>" + formatDate(match.date) + "</p>";
-    row += "</div><div class='col card-content'><ul class='list-group list-group-horizontal'>"
+    row = "<a href='#chart' class='btn match-record' id='" + match._id + "'>\
+                <div class='card " + (isVictory ? "victory" : "defeat") + "'>\
+                    <div class='row'>\
+                        <div class='lineup'>\
+                            <b> vs. &nbsp " + oppositeTeam + "</b>\
+                            <p>" + formatDate(match.date) + "</p>\
+                        </div>\
+                        <div class='col card-content'>\
+                            <ul class='list-group list-group-horizontal'>";
     for (var i = 0; i < 5; i++) {
-        row += "<li class='list-group-item score'><p>" + gameTitle[i] + "</p>";
-        if (isGuest && i < totalGames) {
-            row += "<h3>" + match.g_scores[i] + " : " + match.m_scores[i] + "</h3></li>"
-        }
-        else if (!isGuest && i < totalGames) {
+        row += "<li class='list-group-item score'>\
+                    <p>" + gameTitle[i] + "</p>";
+        if (i < totalGames) {
             row += "<h3>" + match.m_scores[i] + " : " + match.g_scores[i] + "</h3></li>"
         }
     }
@@ -439,11 +448,12 @@ function renderMatch(match) {
     }
     row += "</ul></div></div></div></a>"
     $(".matches").append(row);
-    $(".match-record").on('click', function(){
-        initMatchInfo();
-        renderMatchInfoById($(this).attr("id"));
-    })
 }
+
+$(document).on('click', ".match-record", function(){
+    initMatchInfo();
+    renderMatchInfoById($(this).attr("id"));
+})
 
 function getMatchPoints(match) {
     var g = get('/api/game/'+match._id+'/g_scores').done(function(res){
@@ -475,7 +485,6 @@ function fetchPlayerList() {
         .done(function () {
             myTeam.players.map((player) => {
                 getPlayerMainStats(player);
-                getPlayerDetailedStats(player);
                 renderPlayerRow(player);
             })
         })
@@ -532,15 +541,6 @@ function getPlayerMainStats(player) {
     player['block_score_rate'] = getBlockScoreRate(player['records']);
 }
 
-function getPlayerDetailedStats(player) {
-    player['attack_times'] = getAttackTimes(player['records']);
-    player['avg_attack_times_per_game'] = getAvgAttackTimesPerGame(player['records']);
-    player['receive_times'] = getReceiveTimes(player['records']);
-    player['block_times'] = getBlockTimes(player['records']);
-    player['avg_receive_times_per_game'] = getAvgReceiveTimesPerGame(player['records']);
-    player['avg_block_times_per_game'] = getAvgBlockTimesPerGame(player['records']);
-}
-
 function renderMatchInfoById(gid){
     var game = myTeam.games.find((game) => game._id == gid);
     $(".plot-info #name").contents().filter(function () {
@@ -553,16 +553,25 @@ function renderMatchInfoById(gid){
         get('/api/game/'+gid+'/records?cond='+ field)
         .done(function(res){
             $(".plot-info #" + field).html(res.count.toString(10));
+            $(".plot-info #" + field).parent('li').on('click', function(){
+                drawPlot(res.records);
+            });
         })
         Object.keys(matchDetailedStatsTitle[field].subStats).forEach(function(stat){
             get('/api/game/'+gid+'/records?cond='+ stat)
             .done(function(res){
                 $(".plot-info #" + stat).html(res.count.toString(10));
+                $(".plot-info #" + stat).parent('tr').on('click', function(){
+                    drawPlot(res.records);
+                });
             })
             Object.keys(matchDetailedStatsTitle[field].subStats[stat].subStats).forEach(function(subStat){
                 get('/api/game/'+gid+'/records?cond='+ subStat)
                 .done(function(res){
                     $(".plot-info #" + stat+'_'+subStat).html(res.count.toString(10));
+                    $(".plot-info #" + stat+'_'+subStat).parent('tr').on('click', function(){
+                        drawPlot(res.records);
+                    });
                 })
             })
         })
@@ -582,16 +591,25 @@ function renderPlayerInfoById(pid) {
         get('/api/player/'+pid+'/records?cond='+ field)
         .done(function(res){
             $(".plot-info #" + field).html(res.count.toString(10));
+            $(".plot-info #" + field).parent('li').on('click', function(){
+                drawPlot(res.records);
+            });
         })
         Object.keys(playerDetailedStatsTitle[field].subStats).forEach(function(stat){
             get('/api/player/'+pid+'/records?cond='+ stat)
             .done(function(res){
                 $(".plot-info #" + stat).html(res.count.toString(10));
+                $(".plot-info #" + stat).parent('tr').on('click', function(){
+                    drawPlot(res.records);
+                });
             })
             Object.keys(playerDetailedStatsTitle[field].subStats[stat].subStats).forEach(function(subStat){
                 get('/api/player/'+pid+'/records?cond='+ subStat)
                 .done(function(res){
                     $(".plot-info #" + stat+'_'+subStat).html(res.count.toString(10));
+                    $(".plot-info #" + stat+'_'+subStat).parent('tr').on('click', function(){
+                        drawPlot(res.records);
+                    });
                 })
             })
         })
@@ -673,7 +691,7 @@ function initPlayerInfo() {
 }
 
 function getServeErrorRate(records) {
-    var error_count = records.filter((rec) => rec.event == "SERVE" && rec.value <= 60).length;
+    var error_count = records.filter((rec) => rec.event == "SERVE" && (rec.quality <= 25 || rec.score_team == "enemy")).length;
     var serve_count = records.filter((rec) => rec.event == "SERVE").length;
     if (serve_count == 0) {
         return 0.0;
@@ -682,7 +700,7 @@ function getServeErrorRate(records) {
 }
 
 function getReceiveErrorRate(records) {
-    var error_count = records.filter((rec) => rec.event == "RCV" && rec.value <= 60).length;
+    var error_count = records.filter((rec) => rec.event == "RCV" && (rec.quality <= 25 || rec.score_team == "enemy")).length;
     var receive_count = records.filter((rec) => rec.event == "RCV").length;
     if (receive_count == 0) {
         return 0.0;
@@ -691,7 +709,7 @@ function getReceiveErrorRate(records) {
 }
 
 function getAttackErrorRate(records) {
-    var error_count = records.filter((rec) => rec.event == "ATK" && rec.value <= 60).length;
+    var error_count = records.filter((rec) => rec.event == "ATK" && (rec.quality <= 25 || rec.score_team == "enemy")).length;
     var attack_count = records.filter((rec) => rec.event == "ATK").length;
     if (attack_count == 0) {
         return 0.0;
@@ -700,7 +718,7 @@ function getAttackErrorRate(records) {
 }
 
 function getAttackScoreRate(records) {
-    var score_count = records.filter((rec) => rec.event == "ATK" && rec.value > 80).length;
+    var score_count = records.filter((rec) => rec.event == "ATK" && rec.score_team == "ally").length;
     var attack_count = records.filter((rec) => rec.event == "ATK").length;
     if (attack_count == 0) {
         return 0.0;
@@ -709,7 +727,7 @@ function getAttackScoreRate(records) {
 }
 
 function getBlockScoreRate(records) {
-    var score_count = records.filter((rec) => rec.event == "BLOCK" && rec.value > 80).length;
+    var score_count = records.filter((rec) => rec.event == "BLOCK" && rec.score_team != "enemy").length;
     var block_count = records.filter((rec) => rec.event == "BLOCK").length;
     if (block_count == 0) {
         return 0.0;

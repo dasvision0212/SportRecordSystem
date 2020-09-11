@@ -51,6 +51,7 @@ nav {
 .info ul{
     border-radius: 0px;
     justify-content: right;
+    direction: rtl;
 }
 
 .info li{
@@ -194,7 +195,7 @@ nav {
     margin-top: 10px;
     margin-left: 5%;
     margin-right: 5%;
-    height: 90%;
+    height: 70%;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -289,7 +290,7 @@ caption{
 }
 
 .stats-plots .plot-body{
-    min-height: 100px;
+    min-width: 100%;
 }
 
 
@@ -298,20 +299,6 @@ caption{
     top: 0; 
 }
 
-.stats-plots .dropdown{
-    padding: 10px;
-    justify-content: center;
-}
-
-.stats-plots .dropdown .btn{
-    font-size: 22pt;
-    color: #000000;
-    background-color: #ffffff;
-    border-top: 0 none;
-    border-left: 0 none;
-    border-bottom: 0 none;
-    border-right: 0 none;
-}
 
 table  { border-collapse: collapse; width: 100%; }
 th, td { padding: 8px 16px; }
