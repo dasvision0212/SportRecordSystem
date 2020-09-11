@@ -1,0 +1,189 @@
+body{
+    height: 100vh;
+    width: 100vw;
+}
+
+.top-layer{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 100;
+}
+
+#record-page{
+    height: calc(100vh - 56px);
+}
+
+#return-button{
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+}
+
+#record-page .row{
+    height: 100%;
+}
+
+
+#player-list{
+    max-height: 100%;
+    overflow: auto;
+    padding-top: 20px;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+#player-list li{
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
+    align-items:center;
+    height: 80px;
+    font-size: 18pt;
+    border-right: none;
+    border-left: none;
+    padding-left: 30px;
+    border-radius: 0;
+}
+
+#player-list li:hover{
+    background-color: #f0f0f0;
+}
+
+#player-list #num{
+    flex: 1;
+}
+
+#player-list #name{
+    padding-left: 10px;
+    flex: 3;
+}
+
+#player-list #pos{
+    font-size: 12pt;
+    color: #999999;
+    flex: 3;
+}
+
+#player-list #add-player{
+    cursor: pointer;
+}
+
+#player-list #add-player #icon{
+    flex: 1;
+}
+
+
+#player-list #add-player #text{
+    color: #999999;
+    flex: 3;
+}
+
+nav .btn{
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 50%;
+}
+
+nav .navbar-brand{
+    pointer-events: none;
+    margin-left: 6px;
+}
+
+#court{
+    height: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#court-img{
+    max-height: 100%; 
+    z-index: -1;
+    width: auto;
+}
+
+.pin{
+    position: absolute;
+    width: 60px;
+    height: 60px;
+}
+
+.pin-img{
+    width: 60px;
+    height: 60px;
+}
+
+#panel{
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#panel div{
+    margin: auto;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#panel #score-board{
+    flex: 1;
+    display: flex;
+}
+
+#panel #score-board #score{
+    padding: 0;
+}
+
+#panel #score-board .team-name{
+    color: #999999;
+}
+
+#panel #score-board #a-point{
+    padding-left: 0;
+}
+
+#panel #score-board #e-point{
+    padding-right: 0;
+}
+
+#panel #score-board .row{
+    text-align: center;
+    width: 100%;
+}
+
+#a-score, #e-score{
+    font-size: 56pt;
+}
+
+#panel #select-panel{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.score-btn{
+    padding: 0;
+    cursor: pointer;
+}
+
+.behavior-btn, .submit-btn{
+    text-align: center;
+}
+
+.behavior-btn-img, .submit-btn-img{
+    width: 75px;
+}
+
+#panel #submit-panel{
+    flex: 1;
+}
+
+.mask{
+    opacity: 0;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    background-color: #f0f0f0;
+    z-index: -2;
+}

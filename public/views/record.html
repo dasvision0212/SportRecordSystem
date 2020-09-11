@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Record Page</title>
+
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+
+    <link rel="stylesheet" href="css/record.css" id="pagestyle">
+    <script type="text/javascript" src="js/record.js"></script>
+    <script type="text/javascript" src="/js/dragdroptouch.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="mask"></div>
+    <!-- Navigation Section -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
+        <button onclick="window.history.back();" type="button" id="return-button" class="btn btn-light">
+            <svg width="1.4em" height="1.4em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+            </svg>
+        </button>
+        <a class="navbar-brand lineup" href="/"></a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsResponsive"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" style="display: none;"><a class="nav-link" id="newGameButton" data-toggle="modal" data-target="#newGame"
+                        href="#">開始紀錄<span class="sr-only">(current)</span></a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#confirmEnd"
+                        href="#">結束紀錄<span class="sr-only">(current)</span></a></li>
+
+            </ul>
+        </div>
+    </nav>
+    <div id="record-page" class="container-fluid">
+        <div class="row">
+            <div id="player-list" class="col-md">
+                <ul class="list-group">
+                    <li id="add-player" class="list-group-item" data-toggle="modal" data-target="#playerList">
+                        <div id="icon"><svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="bi bi-plus"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </svg></div>
+                        <div id="text">新增球員</div>
+                    </li>
+
+                </ul>
+
+                <!-- Modal -->
+                <div class="modal fade" id="playerList" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">球員名冊</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table" id='player-list-modal'>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="newGame" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title">新增比賽</h2>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="game-info">
+                                    <div class="form-group row">
+                                        <label for="enemy-name" class="col-sm-2 col-form-label">對戰隊伍</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="enemy-name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="match-date" class="col-sm-2 col-form-label">日期</label>
+                                        <div class="col-sm-10">
+                                            <input type="date" class="form-control" id="match-date">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                    id="start-new-game">開始記錄</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="confirmEnd" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">確定要結束嗎？</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" id="confirmEndGame">結束</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="player">
+                    <div id="table-scroll">
+                        <table id="PlayerOnTheField">
+                            <td>
+                            </td>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="court" ondragover="onDragOver(event);" ondrop='onDrop(event);' class="col-md">
+                <img id="court-img" src="img/volleyball_court.png" alt="">
+            </div>
+            <div id="panel" class="col-md">
+                <div id="score-board">
+                    <div class="container" id="score">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div id="m-team-name" class="col-4 team-name"></div>
+                            <div class="col-1" id="a-point">0</div>
+                            <div class="col-1" id="e-point">0</div>
+                            <div id="g-team-name" class="col-4 team-name"></div>
+                            <div class="col-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-1 btn score-btn" id='p-ally' onclick="changeScore(event)">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path fill-rule="evenodd"
+                                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg>
+                            </div>
+                            <div class="col-4" style="padding-left: 0;">
+                                <h1 id="a-score">0</h1>
+                            </div>
+                            <div class="col-2">
+                                <h1>:</h1>
+                            </div>
+                            <div class="col-4" style="padding-right: 0;">
+                                <h1 id="e-score">0</h1>
+                            </div>
+                            <div class="col-1 btn score-btn" id='p-enemy' onclick="changeScore(event)">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path fill-rule="evenodd"
+                                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="select-panel">
+                    <div class="row">
+                        <div class="col behavior-btn" id="atk-btn">
+                            <img class="behavior-btn-img" draggable="false" src="img/behavior-btn.png">
+                        </div>
+                        <div class="col behavior-btn" id="block-btn">
+                            <img class="behavior-btn-img" draggable="false" src="img/behavior-btn.png">
+                        </div>
+                        <div class="col behavior-btn" id="receive-btn">
+                            <img class="behavior-btn-img" draggable="false" src="img/behavior-btn.png">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col behavior-btn" id="serve-btn">
+                            <img class="behavior-btn-img" draggable="false" src="img/behavior-btn.png">
+                        </div>
+                        <div class="col behavior-btn" id="set-btn">
+                            <img class="behavior-btn-img" draggable="false" src="img/behavior-btn.png">
+                        </div>
+                        <div class="col behavior-btn" id="replay-btn">
+                            <img class="behavior-btn-img" draggable="false" src="img/behavior-btn.png">
+                        </div>
+                    </div>
+                </div>
+                <div id="submit-panel">
+                    <div class="row">
+                        <div class="col submit-btn">
+                            <img class="submit-btn-img" src="img/behavior-btn.png" id="ally" onclick="submit(event);">
+                        </div>
+                        <div class="col submit-btn">
+                            <img class="submit-btn-img" src="img/behavior-btn.png" id="none" onclick="submit(event);">
+                        </div>
+                        <div class="col submit-btn">
+                            <img class="submit-btn-img" src="img/behavior-btn.png" id="enemy" onclick="submit(event);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
