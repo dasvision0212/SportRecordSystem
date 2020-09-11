@@ -11,7 +11,6 @@ var p_videotime = 0;
 var score_team = 'none'
 var g_gid = '';
 let myTeam;
-deprecated
 //onload, load the playerList in the modal
 window.onload = function () {
     get('api/team/self')
@@ -190,47 +189,47 @@ function onDrop(event) {
 // behavior buttons
 $(document).on('mousedown', '#atk-btn', function (event) {
     p_behavior = "ATK";
-    displayOption(event, 100, '../img/behavior-btn.png'); //top (強攻)
-    displayOption(event, 75, '../img/behavior-btn.png'); //mid （普攻）
-    displayOption(event, 50, '../img/behavior-btn.png'); //right （佯攻）
-    displayOption(event, 25, '../img/behavior-btn.png'); //bottom （虛攻）
-    displayOption(event, 0, '../img/behavior-btn.png'); //left （犯規）
+    displayOption(event, 100, '../img/atk-100.png'); //top (強攻)
+    displayOption(event, 75, '../img/atk.png'); //mid （普攻）
+    displayOption(event, 50, '../img/atk-50.png'); //right （佯攻）
+    displayOption(event, 25, '../img/atk-25.png'); //bottom （虛攻）
+    displayOption(event, 0, '../img/foul.png'); //left （犯規）
 })
 
 $(document).on('mousedown', '#block-btn', function (event) {
     p_behavior = "BLOCK";
-    displayOption(event, 100, '../img/behavior-btn.png'); //top （攔網）
-    displayOption(event, 75, '../img/behavior-btn.png'); //mid （被閃躲）
-    displayOption(event, 25, '../img/behavior-btn.png'); //bottom （攔穿）
-    displayOption(event, 0, '../img/behavior-btn.png'); //left （犯規）
+    displayOption(event, 100, '../img/block-100.png'); //top （攔網）
+    displayOption(event, 75, '../img/block-75.png'); //mid （被閃躲）
+    displayOption(event, 25, '../img/block-25.png'); //bottom （攔穿）
+    displayOption(event, 0, '../img/foul.png'); //left （犯規）
 })
 
 $(document).on('mousedown', '#receive-btn', function (event) {
     p_behavior = "RCV";
-    displayOption(event, 100, '../img/behavior-btn.png'); //top （嗆司）
-    displayOption(event, 75, '../img/behavior-btn.png'); //mid （一般接球）
-    displayOption(event, 25, '../img/behavior-btn.png'); //bottom （接噴）
-    displayOption(event, 0, '../img/behavior-btn.png'); //left （犯規）
+    displayOption(event, 100, '../img/receive-100.png'); //top （嗆司）
+    displayOption(event, 75, '../img/receive.png'); //mid （一般接球）
+    displayOption(event, 25, '../img/receive-25.png'); //bottom （接噴）
+    displayOption(event, 0, '../img/foul.png'); //left （犯規）
 })
 
 $(document).on('mousedown', '#serve-btn', function (event) {
     p_behavior = "SERVE";
-    displayOption(event, 100, '../img/behavior-btn.png'); //top （爆擊發球）
-    displayOption(event, 75, '../img/behavior-btn.png'); //mid （一般發球）
-    displayOption(event, 25, '../img/behavior-btn.png'); //bottom （發球失誤）
-    displayOption(event, 0, '../img/behavior-btn.png'); //left （犯規）
+    displayOption(event, 100, '../img/serve-100.png'); //top （爆擊發球）
+    displayOption(event, 75, '../img/serve.png'); //mid （一般發球）
+    displayOption(event, 25, '../img/serve-25.png'); //bottom （發球失誤）
+    displayOption(event, 0, '../img/foul.png'); //left （犯規）
 })
 
 $(document).on('mousedown', '#set-btn', function (event) {
     p_behavior = "SET";
-    displayOption(event, 75, '../img/behavior-btn.png'); //mid （舉正）
-    displayOption(event, 25, '../img/behavior-btn.png'); //bottom （失舉）
-    displayOption(event, 0, '../img/behavior-btn.png'); //left （犯規）
+    displayOption(event, 75, '../img/set.png'); //mid （舉正）
+    displayOption(event, 25, '../img/set-25.png'); //bottom （失舉）
+    displayOption(event, 0, '../img/foul.png'); //left （犯規）
 })
 
 $(document).on('mousedown', '#replay-btn', function (event) {
     p_behavior = "REPLAY";
-    displayOption(event, 75, '../img/behavior-btn.png'); //mid （公正球）
+    displayOption(event, 75, '../img/replay.png'); //mid （公正球）
 })
 
 $(document).on('mouseup', function (event) {
@@ -240,6 +239,18 @@ $(document).on('mouseup', function (event) {
     dismissOption(event, 25);
     dismissOption(event, 0);
     $('.mask').css('opacity', '0').css('z-index', '-2');
+})
+
+$(document).on('mouseover', '.submit-btn-img', function(event){
+    var original_src = $(this).attr('src');
+    original_src = original_src.substring(0, original_src.length - 4);
+    $(this).attr('src', original_src + '-hover.png');
+})
+
+$(document).on('mouseout', '.submit-btn-img', function () {
+    var original_src = $(this).attr('src');
+    original_src = original_src.substring(0, original_src.length - 10) + '.png';
+    $(this).attr('src', original_src);
 })
 
 
