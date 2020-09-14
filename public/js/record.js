@@ -11,6 +11,7 @@ var p_videotime = 0;
 var score_team = 'none'
 var g_gid = '';
 let myTeam;
+let enemyId = '0';
 //onload, load the playerList in the modal
 window.onload = function () {
     get('api/team/self')
@@ -21,6 +22,7 @@ window.onload = function () {
                 let last_game = res.games[res.games.length - 1];
                 if (!last_game.confirm) { // Resume the unconfirmed game
                     g_gid = last_game._id;
+                    enemyId = last_game.g_players[0].player;
                     $(".lineup").text(last_game.name);
                     $("#m-team-name").text(last_game.master);
                     $("#g-team-name").text(last_game.guest);
@@ -60,7 +62,7 @@ window.onload = function () {
             }
 
             var enemyRow =
-                '<tr id="0" style="display: none;">\
+            '<tr class="enemyRow" id="' + enemyId + '" style="display: none;">\
                 <th scope="row">0</th>\
                 <td>敵方球員</td>\
                 <td>敵人</td>\
@@ -85,15 +87,15 @@ window.onload = function () {
                     .attr("draggable", true)
                     .prependTo("#player-list ul"); // Insert right before enemy player in the list
 
-                if (id != "0") { // Imaginary enemy player can't be post
-                    post('/api/game/' + g_gid + '/m_player', { pid: id, number: number })
+                if (id != enemyId) { // Imaginary enemy player can't be post
+                post('/api/game/' + g_gid + '/m_player', { pid: id, number: number })
                         .fail(function (error) {
                             console.log(error);
                         })
                 }
             })
 
-            $('#player-list-modal #0').trigger('click'); // Automatically add in enemy player
+            $('.enemyRow').trigger('click'); // Automatically add in enemy player
             if (g_gid != '') {
                 get('/api/game/' + g_gid + '/m_player') // Resume added players
                     .done(function (res) {
@@ -148,6 +150,9 @@ function createNewGame(enemyName, matchDate) {
             $(".lineup").text(newGame.name);
             $("#m-team-name").text(newGame.master);
             $("#g-team-name").text(newGame.guest);
+            enemyId = newGame.g_players[0].player;
+            $(".enemyRow").attr('id', enemyId);
+            $("#player-list #0").attr('id', enemyId);
         })
 }
 // player drag handlers
