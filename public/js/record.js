@@ -12,6 +12,7 @@ var score_team = 'none'
 var g_gid = '';
 let myTeam;
 let enemyId = '0';
+var canUndo = false;
 //onload, load the playerList in the modal
 window.onload = function () {
     get('api/team/self')
@@ -370,7 +371,7 @@ function submit(event) {
     p_locationY = 0;
     p_maker = '';
     score_team = 'none';
-
+    canUndo = true;
 
     if (p_allyScore >= 25 && p_allyScore - p_enemyScore >= 2) {
         p_allyScore = 0;
@@ -388,6 +389,7 @@ function submit(event) {
             .done(function (res) {
                 console.log(res);
             });
+        canUndo = false;
     }
     if (p_enemyScore >= 25 && p_enemyScore - p_allyScore >= 2) {
         p_allyScore = 0;
@@ -405,6 +407,7 @@ function submit(event) {
             .done(function (res) {
                 console.log(res);
             });
+        canUndo = false;
     }
 
     $('.pin').remove();
@@ -495,6 +498,29 @@ function changeScore(event) {
             .done(function (res) {
                 console.log(res);
             });
+    }
+}
+
+function undoLastRecord(){
+    if(!canUndo){
+        return;
+    }
+    if(g_gid != ''){
+        post('/api/game/'+g_gid+'/record/undo')
+        .done(function(res){
+            if(res.score_team == 'ally'){
+                var temp = document.getElementById('a-score');
+                var s = parseInt(temp.innerHTML) - 1;
+                p_allyScore = s;
+                temp.innerHTML = s;
+            }
+            else if(res.score_team == 'enemy'){
+                var temp = document.getElementById('e-score');
+                var s = parseInt(temp.innerHTML) - 1;
+                p_enemyScore = s;
+                temp.innerHTML = s;
+            }
+        })
     }
 }
 
