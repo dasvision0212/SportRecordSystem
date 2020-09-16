@@ -38,7 +38,9 @@
                 <li class="nav-item"><a class="nav-link" href="/record">Record</a></li>
                 <li class="nav-item active"><a class="nav-link" href="/history">History</a></li>
                 <li class="nav-item"><a class="nav-link" href="/team">Team</a></li>
-                <li class="nav-item" id="logout" onclick="document.cookie='session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';document.location.href = '/';"><a class="nav-link">Log Out</a></li>
+                <li class="nav-item" id="logout"
+                    onclick="document.cookie='session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';document.location.href = '/';">
+                    <a class="nav-link">Log Out</a></li>
             </ul>
         </div>
     </nav>
@@ -91,7 +93,26 @@
         <hr>
         <div class="stats-plots row" id="chart">
             <div class="col-8  plot-info">
-                <h1 id="name"> <span id="pos"> </span></h1>
+                <h1 id="name"> <span id="pos">
+                    </span>
+                </h1>
+
+                <div class="modal fade" id="confirmDelete" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">確定要刪除嗎？</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" id="deleteGame">刪除</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-6 info-overview">
                         <ul class="list-group stats">
@@ -105,8 +126,10 @@
             </div>
             <div class="col-4 plot">
                 <div class="plot-body" style="position: relative; max-height: 100%;">
-                    <img id="volleyball_court" src="img/volleyball_court.png" style="position: absolute; top: 0; left: 0; max-width: 90%; margin-top: 20px;" alt="">
-                    <canvas class="plot-canvas" id="hotspot-plot" style="position: absolute; top: 0; left: 0; margin-top: 20px;">
+                    <img id="volleyball_court" src="img/volleyball_court.png"
+                        style="position: absolute; top: 0; left: 0; max-width: 90%; margin-top: 20px;" alt="">
+                    <canvas class="plot-canvas" id="hotspot-plot"
+                        style="position: absolute; top: 0; left: 0; margin-top: 20px;">
                     </canvas>
                 </div>
             </div>
